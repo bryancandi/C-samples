@@ -8,7 +8,7 @@ This simple #define processor program stores macros in a hash table of linked li
 - `getword.c` — input utilities: `getword`, `getch`, `ungetch`
 - `Makefile` — use `make` to automate compilation
 
-Compile the program with GCC or the Makefile:
+## Compile the program with GCC or the Makefile:
 
 ```sh
 # Using GCC directly
@@ -17,3 +17,15 @@ gcc -Wall -Wextra -Wpedantic main.c macro.c getword.c -o macro
 # Using the Makefile
 make        # build the program
 make clean  # remove the compiled binary
+```
+
+## Program usage:
+
+```
+$ ./macro
+#define MAXVAL 100     # define MAXVAL as 100
+MAXVAL                 # prints: MAXVAL is defined as: 100
+!print                 # prints all current macros
+#undef MAXVAL          # remove MAXVAL macro
+MAXVAL                 # prints: not defined: MAXVAL
+```
