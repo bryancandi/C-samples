@@ -1,6 +1,6 @@
-# \#define macro processor (K&R exercise 6-6)
+# `#define` Macro Processor
 
-This simple #define processor program stores macros in a hash table of linked lists. It currently supports `#define` and `#undef` to insert or remove entries from the table.
+A minimal C `#define` macro processor *(K&R Exercise 6-6)*. It uses a hash table of linked lists to store macro names and their definitions. It currently supports basic `#define` and `#undef` operations.
 
 - `main.c` — main function: reads and processes input
 - `macro.c` — hash table operations: `hash`, `lookup`, `install`, `undef`, `print_hashtab`
