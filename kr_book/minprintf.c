@@ -1,5 +1,5 @@
 /* Sample 7.3 / Exercise 7-3
- minprintf: minimal printf with variable argument list
+ * minprintf: minimal printf with variable argument list
  */
 
 #include <stdarg.h>
