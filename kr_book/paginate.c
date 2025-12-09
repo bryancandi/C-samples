@@ -1,12 +1,12 @@
 /* Exercise 7-8
- * pagecat: print files with pagination
- * Each file starts on a new page with its filename and a running page number.
+ * paginate: print files with pagination
+ * Each file starts on a new page with its filename and a running page number
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CHARS_PER_LINE 75 // set char count per line
+#define CHARS_PER_LINE 80 // set char count per line
 #define LINES_PER_PAGE 50 // set line count per page
 
 void filecopy(FILE *, FILE *, const char *filename);
