@@ -1,8 +1,9 @@
-/* Exercise 7-8
- * paginate: print files with pagination
+/* Exercise 7-8 (with extra features)
+ * paginate (v2): print files with pagination
  * Each file starts on a new page with its filename and a running page number
  */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -67,9 +68,42 @@ void filecopy(FILE *ifp, FILE *ofp, const char *filename)
         }
         else if (charnum >= CHARS_PER_LINE)
         {
-            charnum = 0;
-            linenum++;
-            putc('\n', ofp);
+            int nc = getc(ifp); // read ahead to next char
+
+            if (nc == EOF)
+            {
+                putc('\n', ofp);
+                linenum++;
+                break;
+            }
+            if (isalpha(c) && isalpha(nc)) // inside a word
+            {
+                charnum = 1; // 1 for nc
+                linenum++;
+                putc('-', ofp); // hyphenate word
+                putc('\n', ofp);
+                putc(nc, ofp);
+            }
+            else if (nc == '.' || nc == ',' || nc == ';' || nc == ':' || nc == '!' || nc == '?' ) // punct on current line
+            {
+                charnum = 0;
+                linenum++;
+                putc(nc, ofp);
+                putc('\n', ofp);
+            }
+            else if (isspace(nc)) // don't start a newline with a space
+            {
+                charnum = 0;
+                linenum++;
+                putc('\n', ofp);
+            }
+            else // newline starting with nc
+            {
+                charnum = 1;
+                linenum++;
+                putc('\n', ofp);
+                putc(nc, ofp);
+            }
         }
         if (linenum >= LINES_PER_PAGE)
         {
