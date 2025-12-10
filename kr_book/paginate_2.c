@@ -76,6 +76,7 @@ void filecopy(FILE *ifp, FILE *ofp, const char *filename)
                 linenum++;
                 break;
             }
+            // replace this with a loop that delays newline until outside of a word (unless the word exceeds a defined length)
             if (isalpha(c) && isalpha(nc)) // inside a word
             {
                 charnum = 1; // 1 for nc
