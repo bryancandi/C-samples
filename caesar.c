@@ -4,7 +4,7 @@
  * Usage (encrypt): ./caesar -e KEY
  * Usage (decrypt): ./caesar -d KEY
  * Author: Bryan C.
- * Date: December 2025
+ * Date: December 12, 2025
  */
 
 #include <ctype.h>
