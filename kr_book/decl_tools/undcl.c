@@ -1,4 +1,5 @@
-/* Sample 5.12
+/*
+ * Sample 5.12
  * Exercise 5-19
  * undcl: convert word descriptions into declarations
  * example: x is a function returning a pointer to an array of pointers to functions returning char
@@ -10,25 +11,25 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAXTOKEN 100        // maximum tokens
-#define BUFSIZE 100         // buffer size for getch/ungetch
+#define MAXTOKEN 100        /* maximum tokens */
+#define BUFSIZE 100         /* buffer size for getch/ungetch */
 
 enum { NAME, PARENS, BRACKETS };
 enum { NO, YES };
 
 int gettoken(void);
 int nexttoken(void);
-int tokentype;              // type of last token
-char token[MAXTOKEN];       // last token string
-char out[1000];             // output string
-int prevtoken = NO;         // there is no previous token
+int tokentype;              /* type of last token */
+char token[MAXTOKEN];       /* last token string */
+char out[1000];             /* output string */
+int prevtoken = NO;         /* there is no previous token */
 
 int getch(void);
 void ungetch(int c);
-char buf[BUFSIZE];          // buffer for ungetch
-int bufp = 0;               // next free position in buf
+char buf[BUFSIZE];          /* buffer for ungetch */
+int bufp = 0;               /* next free position in buf */
 
-// convert word descriptions into declarations
+/* convert word descriptions into declarations */
 int main(void)
 {
     int type;
@@ -71,7 +72,7 @@ int main(void)
     return 0;
 }
 
-// gettoken: return next token
+/* gettoken: return next token */
 int gettoken(void)
 {
     int c;
@@ -135,7 +136,7 @@ int gettoken(void)
     }
 }
 
-// nexttoken: get the next token and push it back
+/* nexttoken: get the next token and push it back */
 int nexttoken(void)
 {
     int type;
@@ -145,13 +146,13 @@ int nexttoken(void)
     return type;
 }
 
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

@@ -1,5 +1,7 @@
-/* main.c
- * main function for the #define processor program */
+/*
+ * main.c
+ * main function for the #define processor program
+ */
 
 #include <ctype.h>
 #include <stdio.h>
@@ -8,7 +10,7 @@
 
 #define MAXWORD 100
 
-// simple version of #define processor; read and process input
+/* simple version of #define processor; read and process input */
 int main(void)
 {
     char w[MAXWORD];
@@ -17,43 +19,43 @@ int main(void)
 
     while (getword(w, MAXWORD) != EOF)
     {
-        if (strcmp(w, "#") == 0) // beginning of macro
+        if (strcmp(w, "#") == 0)  /* beginning of macro */
         {
             getword(w, MAXWORD);
-            if (strcmp(w, "define") == 0) // word is "define"
+            if (strcmp(w, "define") == 0)  /* word is "define" */
             {
-                // get macro name
+                /* get macro name */
                 if (getword(name, MAXWORD) == EOF)
                 {
                     break;
                 }
-                // get replacement text
+                /* get replacement text */
                 if (getword(defn, MAXWORD) == EOF)
                 {
                     break;
                 }
-                // install to hash table
+                /* install to hash table */
                 install(name, defn);
             }
-            else if (strcmp(w, "undef") == 0) // word is "undef"
+            else if (strcmp(w, "undef") == 0)  /* word is "undef" */
             {
                 if (getword(name, MAXWORD) == EOF)
                 {
                     break;
                 }
-                // remove from hash table
+                /* remove from hash table */
                 undef(name);
             }
         }
-        else if (strcmp(w, "!") == 0) // beginning of command
+        else if (strcmp(w, "!") == 0)  /* beginning of command */
         {
             getword(w, MAXWORD);
-            if (strcmp(w, "print") == 0) // !print to print all currently defined macros
+            if (strcmp(w, "print") == 0)  /* !print to print all currently defined macros */
             {
                 print_hashtab();
             }
         }
-        else // print replaced words
+        else  /* print replaced words */
         {
             Nlist *np = lookup(w);
             if (np != NULL)

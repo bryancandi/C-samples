@@ -1,18 +1,20 @@
-/* getword.c
- * getword, getch, ungetch functions */
+/*
+ * getword.c
+ * getword, getch, ungetch functions
+ */
 
 #include <ctype.h>
 #include <stdio.h>
 
 #define BUFSIZE 100
 
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];  /* buffer for ungetch */
+int bufp = 0;       /* next free position in buf */
 
 int getch(void);
 void ungetch(int);
 
-// getword: get next word or character from input
+/* getword: get next word or character from input */
 int getword(char *word, int lim)
 {
     int c;
@@ -24,7 +26,7 @@ int getword(char *word, int lim)
     {
         *w++ = c;
     }
-    // allow letters, digits, or underscore as starting character
+    /* allow letters, digits, or underscore as starting character */
     if (!isalnum(c) && c != '_')
     {
         *w = '\0';
@@ -44,13 +46,13 @@ int getword(char *word, int lim)
     return word[0];
 }
     
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

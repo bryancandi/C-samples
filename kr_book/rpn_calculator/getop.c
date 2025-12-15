@@ -1,4 +1,5 @@
-/* getop.c
+/*
+ * getop.c
  * Exercise 4-11: modify getop so that it doesn't need to use ungetch
  * get next operator or numeric operand
  */
@@ -28,15 +29,15 @@ int getop(char s[])
     s[1] = '\0';
     if (!isdigit(c) && c != '.')
     {
-        return c; // not a number
+        return c;  /* not a number */
     }
     i = 0;
-    if (isdigit(c)) // collect integer part
+    if (isdigit(c))  /* collect integer part */
     {
         while (isdigit(s[++i] = c = getchar()))
             ;
     }
-    if (c == '.') // collect fraction part
+    if (c == '.')  /* collect fraction part */
     {
         while (isdigit(s[++i] = c = getchar()))
             ;

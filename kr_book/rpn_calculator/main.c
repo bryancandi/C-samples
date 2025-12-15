@@ -1,4 +1,5 @@
-/* main.c
+/*
+ * main.c
  * Sample 4.3: Reverse Polish Notation calculator
  */
 
@@ -6,7 +7,7 @@
 #include <stdlib.h>
 #include "calc.h"
 
-#define MAXOP 100   // max size of operand or operator
+#define MAXOP 100  /* max size of operand or operator */
 
 int main(void)
 {
