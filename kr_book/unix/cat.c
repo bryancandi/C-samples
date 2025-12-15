@@ -15,9 +15,9 @@ void error(char *fmt, ...);
 int main(int argc, char *argv[])
 {
     int fd;
-    char *prog = argv[0]; /* for error output */
+    char *prog = argv[0];  /* for error output */
 
-    if (argc == 1) /* no file; use standard input */
+    if (argc == 1)  /* no file; use standard input */
     {
         fdcopy(STDIN_FILENO, prog);
     }
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 void fdcopy(int fd, const char *prog)
 {
     int n;
-    char buf[BUFSIZ]; /* read buffer */
+    char buf[BUFSIZ];  /* read buffer */
 
     while ((n = read(fd, buf, BUFSIZ)) > 0)
     {

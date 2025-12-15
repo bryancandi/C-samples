@@ -9,7 +9,7 @@
 #define STDIN 0
 #define STDOUT 1
 
-#undef getchar /* undef stdio getchar macro */
+#undef getchar  /* undef stdio getchar macro */
 
 int main(void)
 {

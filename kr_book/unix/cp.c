@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define PERMS 0666 /* RW for owner, group, others */
+#define PERMS 0666  /* RW for owner, group, others */
 
 void error(char *, ...);
 
