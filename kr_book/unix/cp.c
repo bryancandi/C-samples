@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define PERMS 0666 // RW for owner, group, others
+#define PERMS 0666 /* RW for owner, group, others */
 
 void error(char *, ...);
 
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// error: print an error message and die
+/* error: print an error message and die */
 void error(char *fmt, ...)
 {
     va_list args;
