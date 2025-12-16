@@ -1,5 +1,6 @@
 /*
- * Exercise 8-3
+ * Exercise 8-3: _flushbuf, fflush, fclose
+ * Exercise 8-4: fseek
  */
 
 #include <fcntl.h>
@@ -19,6 +20,7 @@ FILE *fopen(char *, char *);
 int _flushbuf(int c, FILE *fp);
 int fflush(FILE *fp);
 int fclose(FILE *fp);
+int fseek(FILE *fp, long offset, int origin);
 
 int main(void)
 {
@@ -29,6 +31,13 @@ int main(void)
     if (fp == NULL)
     {
         write(2, "fopen failed\n", 13);
+        return 1;
+    }
+
+    if (fseek(fp, 0, 0) != 0)
+    {
+        write(2, "fseek failed\n", 13);
+        fclose(fp);
         return 1;
     }
 
@@ -197,4 +206,36 @@ int fclose(FILE *fp)
         fp->flag &= ~(_READ | _WRITE);
     }
     return rc;
+}
+
+/* fseek: seek with a file pointer */
+int fseek(FILE *fp, long offset, int origin)
+{
+    unsigned nc;  /* number of chars to flush */
+    long rc = 0;  /* return code */
+
+    if (fp->flag & _READ)
+    {
+        if (origin == 1)  /* from current position */
+        {
+            offset -= fp->cnt;  /* remember chars in buffer */
+        }
+        rc = lseek(fp->fd, offset, origin);
+        fp->cnt = 0;  /* no chars buffered */
+    }
+    else if (fp->flag & _WRITE)
+    {
+        if ((nc = fp->ptr - fp->base) > 0)
+        {
+            if (write(fp->fd, fp->base, nc) != nc)
+            {
+                rc = -1;
+            }
+            if (rc != -1)  /* no errors */
+            {
+                rc = lseek(fp->fd, offset, origin);
+            }
+        }
+    }
+    return (rc == -1) ? -1 : 0;
 }
