@@ -1,10 +1,13 @@
-/* Sample 1.4 - Fahr to Celsius symbolic constants */
+/*
+ * Sample 1.4
+ * Fahr to Celsius: symbolic constants
+ */
 
 #include <stdio.h>
 
-#define LOWER 0     // lower limit
-#define UPPER 300   // upper limit
-#define STEP 20     // step size
+#define LOWER 0    /* lower limit */
+#define UPPER 300  /* upper limit */
+#define STEP 20    /* step size */
 
 int main(void)
 {

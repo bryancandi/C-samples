@@ -5,12 +5,12 @@
 
 int my_getline(char[], int maxline);
 
-// print all lines that are longer than 80 chars
+/* print all lines that are longer than 80 chars */
 int main(void)
 {
-    int len;    // current line length
-    int max;    // maximum length seen so far
-    char line[MAXLINE];     // current input line
+    int len;  /* current line length */
+    int max;  /* maximum length seen so far */
+    char line[MAXLINE];  /* current input line */
 
     max = 0;
     while ((len = my_getline(line, MAXLINE)) > 0)
@@ -19,16 +19,16 @@ int main(void)
         {
             max = len;
         }
-        if (max > 80)   // there was a line longer than 80 chars
+        if (max > 80)  /* there was a line longer than 80 chars */
         {
             printf("%s", line);
-            max = 0;    // reset max for next loop
+            max = 0;  /* reset max for next loop */
         }
     }
     return 0;
 }
 
-// my_getline: read a line into s, return length
+/* my_getline: read a line into s, return length */
 int my_getline(char s[], int lim)
 {
     int c, i;

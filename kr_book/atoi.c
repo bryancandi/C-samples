@@ -1,5 +1,6 @@
-/* Sample 3.5
- * atoi v2 - convert s to integer
+/*
+ * Sample 3.5
+ * atoi v2: convert s to integer
  */
 
 #include <stdio.h>
@@ -32,10 +33,10 @@ int atoi(char s[])
 {
     int i, n, sign;
 
-    for (i = 0; isspace(s[i]); i++) // skip white space
+    for (i = 0; isspace(s[i]); i++)  /* skip white space */
         ;
-    sign = (s[i] == '-') ? -1 : 1; // negative or not
-    if (s[i] == '+' || s[i] == '-') // skip sign
+    sign = (s[i] == '-') ? -1 : 1;   /* negative or not */
+    if (s[i] == '+' || s[i] == '-')  /* skip sign */
     {
         i++;
     }

@@ -1,4 +1,5 @@
-/* Exercise 3-2 v2
+/*
+ * Exercise 3-2 v2
  * convert escape sequences into real characters
  */
 
@@ -32,13 +33,13 @@ void unescape(char s[], char t[])
     int i, j;
     for (i = j = 0; t[i] != '\0'; i++)
     {
-        if (t[i] == '\\') // possible beginning of escape sequence
+        if (t[i] == '\\')  /* possible beginning of escape sequence */
         {
             switch (t[i + 1])
             {
                 case 'n':
                     s[j++] = '\n';
-                    i++; // skip 'n' in output
+                    i++;  /* skip 'n' in output */
                     break;
                 case 't':
                     s[j++] = '\t';
@@ -48,7 +49,7 @@ void unescape(char s[], char t[])
                     s[j++] = '\\';
                     i++;
                     break;
-                default: // not an escape sequence
+                default:  /* not an escape sequence */
                     s[j++] = '\\';
                     break;
             }

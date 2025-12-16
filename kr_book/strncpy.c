@@ -1,4 +1,5 @@
-/* Exercise 5-5
+/*
+ * Exercise 5-5
  * strncpy: copy n characters from t to s
  */
 
@@ -6,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CHARS 4 // characters to copy
+#define CHARS 4  /* characters to copy */
 
 void my_strncpy(char *s, char *t, int n);
 

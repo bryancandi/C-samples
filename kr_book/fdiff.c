@@ -1,4 +1,5 @@
-/* Exercise 7-6
+/*
+ * Exercise 7-6
  * fdiff: compare two files and print the first line where they differ
  */
 
@@ -11,7 +12,7 @@ int main(int argc, char *argv[])
     int linenum = 1;
     int mismatch = 0;
     FILE *fp1, *fp2;
-    char *prog = argv[0]; // program name for error output
+    char *prog = argv[0];  /* program name for error output */
 
     if (argc != 3)
     {
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 
         if (c1 == EOF && c2 == EOF)
         {
-            break; // files match
+            break;  /* files match */
         }
         if (c1 != c2)
         {

@@ -2,14 +2,15 @@
 
 #include <stdio.h>
 #include <string.h>
-#define MAXLINE 1000 // maximum input line length
+
+#define MAXLINE 1000  /* maximum input line length */
 
 int my_getline(char line[], int max);
 int strrindex(char source[], char searchfor[]);
 
-char pattern[] = "ould"; // pattern to search for
+char pattern[] = "ould";  /* pattern to search for */
 
-// find all lines matching pattern
+/* find all lines matching pattern */
 int main(void)
 {
     char line[MAXLINE];
@@ -22,14 +23,14 @@ int main(void)
         if (pos >= 0)
         {
             printf("%s", line);
-            printf("%d\n", pos); // print index of occurrence
+            printf("%d\n", pos);  /* print index of occurrence */
             found++;
         }
     }
     return found;
 }
 
-// my_getline: get line into s, return length (renamed to avoid conflict with POSIX getline())
+/* my_getline: get line into s, return length (renamed to avoid conflict with POSIX getline()) */
 int my_getline(char s[], int lim)
 {
     int c, i;
@@ -47,7 +48,7 @@ int my_getline(char s[], int lim)
     return i;
 }
 
-// strrindex: return the position of the rightmost occurrence of t in s, -1 if none
+/* strrindex: return the position of the rightmost occurrence of t in s, -1 if none */
 int strrindex(char s[], char t[])
 {
     int i, j, k;

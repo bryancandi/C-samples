@@ -1,4 +1,5 @@
-/* Sample 4.3
+/*
+ * Sample 4.3
  * Reverse Polish Notation calculator
  */
 
@@ -8,17 +9,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXOP 100   // max size of operand or operator
-#define MAXVAL 100  // max depth of value stack
-#define BUFSIZE 100 // buffer size for getch/ungetch
-#define NUMBER '0'  // signal that a number was found
-#define NAME 'n'    // signal that a name was found
+#define MAXOP 100    /* max size of operand or operator */
+#define MAXVAL 100   /* max depth of value stack */
+#define BUFSIZE 100  /* buffer size for getch/ungetch */
+#define NUMBER '0'   /* signal that a number was found */
+#define NAME 'n'     /* signal that a name was found */
 
-int sp = 0;         // next free stack position
-double val[MAXVAL]; // value stack
+int sp = 0;          /* next free stack position */
+double val[MAXVAL];  /* value stack */
 
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];   /* buffer for ungetch */
+int bufp = 0;        /* next free position in buf */
 
 int getop(char []);
 void push(double);
@@ -28,7 +29,7 @@ void ungetch(int);
 void mathfnc(char []);
 void clear(void);
 
-// Reverse Polish Calculator
+/* Reverse Polish Calculator */
 int main(void)
 {
     int type;
@@ -91,7 +92,7 @@ int main(void)
     return 0;
 }
 
-// push: push f onto value stack
+/* push: push f onto value stack */
 void push(double f)
 {
     if (sp < MAXVAL)
@@ -104,7 +105,7 @@ void push(double f)
     }
 }
 
-// pop: pop and return top value from stack
+/* pop: pop and return top value from stack */
 double pop(void)
 {
     if (sp > 0)
@@ -118,7 +119,7 @@ double pop(void)
     }
 }
 
-// getop: get next operator or numeric operand
+/* getop: get next operator or numeric operand */
 int getop(char s[])
 {
     int i, c;
@@ -127,35 +128,35 @@ int getop(char s[])
         ;
     s[1] = '\0';
     i = 0;
-    if (islower(c)) // command or NAME
+    if (islower(c))  /* command or NAME */
     {
         while (islower(s[++i] = c = getch()))
             ;
         s[i] = '\0';
         if (c != EOF)
         {
-            ungetch(c); // went one char too far
+            ungetch(c);  /* went one char too far */
         }
         if (strlen(s) > 1)
         {
-            return NAME; // > 1 char; it is NAME
+            return NAME;  /* > 1 char; it is NAME */
         }
         else
         {
-            return c; // it may be a command
+            return c;  /* it may be a command */
         }
     }
     if (!isdigit(c) && c != '.')
     {
-        return c; // not a number
+        return c;  /* not a number */
     }
     i = 0;
-    if (isdigit(c)) // collect integer part
+    if (isdigit(c))  /* collect integer part */
     {
         while (isdigit(s[++i] = c = getch()))
             ;
     }
-    if (c == '.') // collect fraction part
+    if (c == '.')  /* collect fraction part */
     {
         while (isdigit(s[++i] = c = getch()))
             ;
@@ -168,13 +169,13 @@ int getop(char s[])
     return NUMBER;
 }
 
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)
@@ -187,7 +188,7 @@ void ungetch(int c)
     }
 }
 
-// mathfnc: check string s for supported math functions
+/* mathfnc: check string s for supported math functions */
 void mathfnc(char s[])
 {
     double op2;
@@ -215,7 +216,7 @@ void mathfnc(char s[])
     }
 }
 
-// clear: clear the stack
+/* clear: clear the stack */
 void clear(void)
 {
     sp = 0;

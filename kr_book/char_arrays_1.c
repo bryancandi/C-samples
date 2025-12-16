@@ -1,4 +1,7 @@
-/* Sample 1.9 character arrays */
+/*
+ * Sample 1.9
+ * Character arrays
+ */
 
 #include <stdio.h>
 #define MAXLINE 1000
@@ -6,13 +9,13 @@
 int my_getline(char[], int maxline);
 void copy(char to[], char from[]);
 
-// print longest input line
+/* print longest input line */
 int main(void)
 {
-    int len;    // current line length
-    int max;    // maximum length seen so far
-    char line[MAXLINE];     // current input line
-    char longest[MAXLINE];  // longest line saved here
+    int len;  /* current line length */
+    int max;  /* maximum length seen so far */
+    char line[MAXLINE];     /* current input line */
+    char longest[MAXLINE];  /* longest line saved here */
 
     max = 0;
     while ((len = my_getline(line, MAXLINE)) > 0)
@@ -23,14 +26,14 @@ int main(void)
             copy(longest, line);
         }
     }
-    if (max > 0)    // there was a line
+    if (max > 0)  /* there was a line */
     {
         printf("%s", longest);
     }
     return 0;
 }
 
-// my_getline: read a line into s, return length
+/* my_getline: read a line into s, return length */
 int my_getline(char s[], int lim)
 {
     int c, i;
@@ -48,7 +51,7 @@ int my_getline(char s[], int lim)
     return i;
 }
 
-// copy: copy 'from' into 'to'; assume to is big enough
+/* copy: copy 'from' into 'to'; assume to is big enough */
 void copy(char to[], char from[])
 {
     int i;

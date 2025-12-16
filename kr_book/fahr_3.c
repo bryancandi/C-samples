@@ -1,4 +1,7 @@
-/* Sample 1.3 - Fahr to Celsius */
+/*
+ * Sample 1.3
+ * Fahr to Celsius
+ */
 
 #include <stdio.h>
 

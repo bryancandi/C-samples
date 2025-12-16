@@ -1,4 +1,5 @@
-/* Exercise 3-4
+/*
+ * Exercise 3-4
  * itoa: convert n to characters in s using a do-while loop
  * avoid overflow by taking the absolute value of each digit
  * and appending a '-' sign if n is negative
@@ -20,7 +21,7 @@ int main(void)
 
     my_itoa(n, s);
     printf("Int: %d\n", n);
-    printf("Str: %s\n", s); // prints n converted to string s
+    printf("Str: %s\n", s);  /* prints n converted to string s */
 
     return 0;
 }
@@ -31,11 +32,11 @@ void my_itoa(int n, char s[])
 
     sign = n;
     i = 0;
-    do // generate digits in reverse order
+    do  /* generate digits in reverse order */
     {
-        s[i++] = abs(n % 10) + '0'; // get next digit
-    } while ((n /= 10) != 0); // remove last digit
-    if (sign < 0) // if n is negative add the '-' sign to the result
+        s[i++] = abs(n % 10) + '0';  /* get next digit */
+    } while ((n /= 10) != 0);  /* remove last digit */
+    if (sign < 0)  /* if n is negative add the '-' sign to the result */
     {
         s[i++] = '-';
     }

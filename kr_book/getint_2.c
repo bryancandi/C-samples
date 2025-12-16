@@ -1,4 +1,5 @@
-/* Exercise 5-1
+/*
+ * Exercise 5-1
  * getint: get next integer from input into *pn
  * push '-' or '+' not followed by a number back on the input
  */
@@ -6,9 +7,9 @@
 #include <ctype.h>
 #include <stdio.h>
 
-#define BUFSIZE 100 // buffer size for getch/ungetch
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+#define BUFSIZE 100  /* buffer size for getch/ungetch */
+char buf[BUFSIZE];   /* buffer for ungetch */
+int bufp = 0;        /* next free position in buf */
 
 int getint(int *pn);
 int getch(void);
@@ -18,9 +19,9 @@ int main(void)
 {
     int n;
 
-    if (getint(&n) != 0) // pass address of n into getint
+    if (getint(&n) != 0)  /* pass address of n into getint */
     {
-        printf("%d\n", n); // print n directly modified by getint
+        printf("%d\n", n);  /* print n directly modified by getint */
     }
     else
     {
@@ -30,26 +31,26 @@ int main(void)
     return 0;
 }
 
-int getint(int *pn) // pn points to int where the parsed number will be stored
+int getint(int *pn)  /* pn points to int where the parsed number will be stored */
 {
     int c, sign;
 
-    while (isspace(c = getch())) // skip white space
+    while (isspace(c = getch()))  /* skip white space */
         ;
     if (!isdigit(c) && c != EOF && c != '+' && c != '-')
     {
-        ungetch(c); // not a number
+        ungetch(c);  /* not a number */
         return 0;
     }
     sign = (c == '-') ? -1 : 1;
     if (c == '+' || c == '-')
     {
-        int d = c; // save sign char in d
+        int d = c;  /* save sign char in d */
         c = getch();
         if (!isdigit(c))
         {
-            ungetch(c); // push back non-digit char
-            ungetch(d); // push back sign char
+            ungetch(c);  /* push back non-digit char */
+            ungetch(d);  /* push back sign char */
             return 0;
         }
     }
@@ -65,13 +66,13 @@ int getint(int *pn) // pn points to int where the parsed number will be stored
     return c;
 }
 
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

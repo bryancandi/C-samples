@@ -1,17 +1,20 @@
-/* Sample 1.10 external variables and scope */
+/*
+ * Sample 1.10
+ * External variables and scope
+ */
 
 #include <stdio.h>
 
-#define MAXLINE 1000    // maximum line input size
+#define MAXLINE 1000    /* maximum line input size */
 
-int max;                // maximum lenth seen so far
-char line[MAXLINE];     // current input line
-char longest[MAXLINE];  // longest line saved here
+int max;                /* maximum lenth seen so far */
+char line[MAXLINE];     /* current input line */
+char longest[MAXLINE];  /* longest line saved here */
 
 int my_getline(void);
 void copy(void);
 
-// print longest input line; specialized version
+/* print longest input line; specialized version */
 int main(void)
 {
     int len;
@@ -27,14 +30,14 @@ int main(void)
             copy();
         }
     }
-    if (max > 0)    // there was a line
+    if (max > 0)  /* there was a line */
     {
         printf("%s", longest);
     }
     return 0;
 }
 
-// my_getline: specialized version
+/* my_getline: specialized version */
 int my_getline(void)
 {
     int c, i;
@@ -53,7 +56,7 @@ int my_getline(void)
     return i;
 }
 
-// copy: specialized version
+/* copy: specialized version */
 void copy(void)
 {
     int i;

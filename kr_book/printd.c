@@ -1,4 +1,5 @@
-/* Sample 4.10 
+/*
+ * Sample 4.10 
  * printd: print n in decimal using recursion 
  */
 

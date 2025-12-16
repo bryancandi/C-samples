@@ -1,4 +1,5 @@
-/* Sample 5.10
+/*
+ * Sample 5.10
  * find: print lines that match pattern from 1st arg; 3rd version
  * check for '-' as the first character by using double-dereference instead of array subscripting
  * inner dereference: *argv gives the current argument string (char *)

@@ -1,4 +1,7 @@
-/* Exercise 1-4 Celsius to Fahr */
+/*
+ * Exercise 1-4
+ * Celsius to Fahr
+ */
 
 #include <stdio.h>
 
@@ -7,9 +10,9 @@ int main(void)
     float fahr, celsius;
     int lower, upper, step;
 
-    lower = 0;      // lower limit
-    upper = 150;    // upper limit
-    step = 10;      // step size
+    lower = 0;    /* lower limit */
+    upper = 150;  /* upper limit */
+    step = 10;    /* step size */
 
     celsius = lower;
     while (celsius <= upper)

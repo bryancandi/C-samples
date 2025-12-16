@@ -41,9 +41,9 @@ int my_getline(char s[], int lim)
 
 void detab(char in[], char out[])
 {
-    int i = 0;  // input index
-    int j = 0;  // output index
-    int col = 0; // current column position
+    int i = 0;    /* input index */
+    int j = 0;    /* output index */
+    int col = 0;  /* current column position */
 
     while (in[i] != '\0')
     {
@@ -61,7 +61,7 @@ void detab(char in[], char out[])
         {
             out[j++] = in[i];
             if (in[i] == '\n')
-                col = 0; // reset column count at newline
+                col = 0;  /* reset column count at newline */
             else
                 col++;
         }

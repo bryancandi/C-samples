@@ -1,9 +1,12 @@
-/* Sample 1.5.4 count words */
+/*
+ * Sample 1.5.4
+ * Count words
+ */
 
 #include <stdio.h>
 
-#define IN 1  // inside a word
-#define OUT 0 // outside a word
+#define IN 1   /* inside a word */
+#define OUT 0  /* outside a word */
 
 int main(void)
 {   

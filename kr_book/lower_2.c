@@ -1,4 +1,5 @@
-/* Exercise 2-10
+/*
+ * Exercise 2-10
  * lower v2: convert c to lower case (ASCII) using a conditional expression
  */
 
@@ -20,9 +21,11 @@ int main(void)
     return 0;
 }
 
-// use conditional expression to:
-// converts an uppercase ASCII letter 'c' to lowercase using the formula c + 'a' - 'A'
-// otherwise returne unmodified
+/*
+ *use conditional expression to:
+ * converts an uppercase ASCII letter 'c' to lowercase using the formula c + 'a' - 'A'
+ * otherwise returne unmodified
+ */
 int lower(int c)
 {
     return (c >= 'A' && c <= 'Z') ? (c + 'a' - 'A') : c;

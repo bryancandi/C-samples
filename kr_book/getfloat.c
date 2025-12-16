@@ -1,13 +1,14 @@
-/* Exercise 5-2
+/*
+ * Exercise 5-2
  * getfloat: get next floating-point number from input into *pn
  */
 
 #include <ctype.h>
 #include <stdio.h>
 
-#define BUFSIZE 100 // buffer size for getch/ungetch
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+#define BUFSIZE 100  /* buffer size for getch/ungetch */
+char buf[BUFSIZE];   /* buffer for ungetch */
+int bufp = 0;        /* next free position in buf */
 
 int getfloat(float *pn);
 int getch(void);
@@ -17,9 +18,9 @@ int main(void)
 {
     float n;
 
-    if (getfloat(&n) != 0) // pass address of n into getfloat
+    if (getfloat(&n) != 0)  /* pass address of n into getfloat */
     {
-        printf("%f\n", n); // print n directly modified by getfloat
+        printf("%f\n", n);  /* print n directly modified by getfloat */
     }
     else
     {
@@ -29,27 +30,27 @@ int main(void)
     return 0;
 }
 
-int getfloat(float *pn) // pn points to float where the parsed number will be stored
+int getfloat(float *pn)  /* pn points to float where the parsed number will be stored */
 {
     int c, d, sign;
     float power;
 
-    while (isspace(c = getch())) // skip white space
+    while (isspace(c = getch()))  /* skip white space */
         ;
     if (!isdigit(c) && c != EOF && c != '+' && c != '-' && c != '.')
     {
-        ungetch(c); // not a number
+        ungetch(c);  /* not a number */
         return 0;
     }
     sign = (c == '-') ? -1 : 1;
     if (c == '+' || c == '-')
     {
-        d = c; // save sign char in d
+        d = c;  /* save sign char in d */
         c = getch();
-        if (!isdigit(c) && c != '.') // sign followed by a decimal point is valid only if a digit follows
+        if (!isdigit(c) && c != '.')  /* sign followed by a decimal point is valid only if a digit follows */
         {
-            ungetch(c); // push back non-digit char
-            ungetch(d); // push back sign char
+            ungetch(c);  /* push back non-digit char */
+            ungetch(d);  /* push back sign char */
             return 0;
         }
     }
@@ -61,7 +62,7 @@ int getfloat(float *pn) // pn points to float where the parsed number will be st
     {
         d = c;
         c = getch();
-        if (!isdigit(c)) // no digits following decimal point
+        if (!isdigit(c))  /* no digits following decimal point */
         {
             ungetch(c);
             ungetch(d);
@@ -81,13 +82,13 @@ int getfloat(float *pn) // pn points to float where the parsed number will be st
     return c;
 }
 
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

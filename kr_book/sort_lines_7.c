@@ -1,4 +1,5 @@
-/* Exercise 5-17
+/*
+ * Exercise 5-17
  * sort: sort input lines
  * optional flags:
  * -n   numeric sort
@@ -14,12 +15,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLINES 5000               // max # lines to be sorted 
-#define MAXLEN 1000                 // max length of any input line
-#define ALLOCSIZE 10000             // size of available space
-char *lineptr[MAXLINES];            // pointers to text lines
-static char allocbuf[ALLOCSIZE];    // storage for alloc
-static char *allocp = allocbuf;     // next free position
+#define MAXLINES 5000             /* max # lines to be sorted */
+#define MAXLEN 1000               /* max length of any input line */
+#define ALLOCSIZE 10000           /* size of available space */
+char *lineptr[MAXLINES];          /* pointers to text lines */
+static char allocbuf[ALLOCSIZE];  /* storage for alloc */
+static char *allocp = allocbuf;   /* next free position */
 
 int my_getline(char *, int);
 int readlines(char *lineptr[], int maxlines);
@@ -31,16 +32,16 @@ int genstrcmp(char *s1, char *s2);
 char *skip_to_field(char *s, int field);
 char *alloc(int);
 
-int fold = 0;           // 1 if fold case
-int directory = 0;      // 1 if directory order
-int field = 0;          // 0 means whole line, >0 means sort by that field
+int fold = 0;       /* 1 if fold case */
+int directory = 0;  /* 1 if directory order */
+int field = 0;      /* 0 means whole line, >0 means sort by that field */
 
 int main(int argc, char *argv[])
 {
     int c;
-    int nlines;             // number of input lines read
-    int numeric = 0;        // 1 if numeric sort
-    int reverse = 0;        // 1 if reverse sort
+    int nlines;       /* number of input lines read */
+    int numeric = 0;  /* 1 if numeric sort */
+    int reverse = 0;  /* 1 if reverse sort */
 
     while (--argc > 0 && **++argv == '-')
     {
@@ -61,8 +62,8 @@ int main(int argc, char *argv[])
                     directory = 1;
                     break;
                 case 'k':
-                    field = atoi(argv[0] + 1);  // e.g. "-k2" sets field=2
-                    goto end_of_option;         // break out of switch so default case isn't reached
+                    field = atoi(argv[0] + 1);  /* e.g. "-k2" sets field=2 */
+                    goto end_of_option;         /* break out of switch so default case isn't reached */
                 case 'h':
                      printf(
                         "Usage: sort [-nrfdh] [-kN]\n"
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
                     break;
             }
         }
-end_of_option: // stop scanning after -kN to avoid "illegal option N"
+end_of_option:  /* stop scanning after -kN to avoid "illegal option N" */
     ;
     }
     if ((nlines = readlines(lineptr, MAXLINES)) >= 0)
@@ -105,7 +106,7 @@ end_of_option: // stop scanning after -kN to avoid "illegal option N"
     }
 }
 
-// my_getline: read a line into s, return length; renamed from getline to avoid POSIX conflict
+/* my_getline: read a line into s, return length; renamed from getline to avoid POSIX conflict */
 int my_getline(char s[], int lim)
 {
     int c, i;
@@ -123,7 +124,7 @@ int my_getline(char s[], int lim)
     return i;
 }
 
-// readlines: read input lines
+/* readlines: read input lines */
 int readlines(char *lineptr[], int maxlines)
 {
     int len, nlines;
@@ -138,7 +139,7 @@ int readlines(char *lineptr[], int maxlines)
         }
         else
         {
-            line[len - 1] = '\0'; // delete newline
+            line[len - 1] = '\0';  /* delete newline */
             strcpy(p, line);
             lineptr[nlines++] = p;
         }
@@ -146,7 +147,7 @@ int readlines(char *lineptr[], int maxlines)
     return nlines;
 }
 
-// writelines: write output lines
+/* writelines: write output lines */
 void writelines(char *lineptr[], int nlines, int reverse)
 {
     if (reverse)
@@ -165,7 +166,7 @@ void writelines(char *lineptr[], int nlines, int reverse)
     }
 }
 
-// my_qsort: sort v[left]...v[right] into increasing order; renamed from qsort to avoid stdlib conflict
+/* my_qsort: sort v[left]...v[right] into increasing order; renamed from qsort to avoid stdlib conflict */
 void my_qsort(void *v[], int left, int right,
             int (*comp)(void *, void *))
 {
@@ -190,7 +191,7 @@ void my_qsort(void *v[], int left, int right,
     my_qsort(v, last + 1, right, comp);
 }
 
-// numcmp: compare s1 and s2 numerically
+/* numcmp: compare s1 and s2 numerically */
 int numcmp(char *s1, char *s2)
 {
     s1 = skip_to_field(s1, field);
@@ -214,7 +215,7 @@ int numcmp(char *s1, char *s2)
     }
 }
 
-// genstrcmp: compare s1 and s2 optionally ignoring non-alphanum characters and/or case
+/* genstrcmp: compare s1 and s2 optionally ignoring non-alphanum characters and/or case */
 int genstrcmp(char *s1, char *s2)
 {
     s1 = skip_to_field(s1, field);
@@ -224,7 +225,7 @@ int genstrcmp(char *s1, char *s2)
 
     for (;; s1++, s2++)
     {
-        // directory order if flag -d specified
+        /* directory order if flag -d specified */
         if (directory)
         {
             while (*s1 && !isalnum(*s1) && *s1 != ' ')
@@ -238,7 +239,7 @@ int genstrcmp(char *s1, char *s2)
         }
         c1 = *s1;
         c2 = *s2;
-        // fold case if flag -f specified
+        /* fold case if flag -f specified */
         if (fold)
         {
             if (c1) c1 = tolower(c1);
@@ -255,21 +256,21 @@ int genstrcmp(char *s1, char *s2)
     }
 }
 
-// skip_to_field: point to start of specified field
+/* skip_to_field: point to start of specified field */
 char *skip_to_field(char *s, int field)
 {
     while (field-- > 1 && *s) {
-        // skip current field
+        /* skip current field */
         while (*s && !isspace(*s))
             s++;
-        // skip spaces
+        /* skip spaces */
         while (*s && isspace(*s))
             s++;
     }
     return s;
 }
 
-// swap: interchange v[i] and v[j]
+/* swap: interchange v[i] and v[j] */
 void swap(void *v[], int i, int j)
 {
     void *temp;
@@ -279,15 +280,15 @@ void swap(void *v[], int i, int j)
     v[j] = temp;
 }
 
-// alloc: return pointer to n characters
+/* alloc: return pointer to n characters */
 char *alloc(int n)
 {
-    if (allocbuf + ALLOCSIZE - allocp >= n) // it fits
+    if (allocbuf + ALLOCSIZE - allocp >= n)  /* it fits */
     {
         allocp += n;
-        return allocp - n; // old p
+        return allocp - n;  /* old p */
     }
-    else // not enough room
+    else  /* not enough room */
     {
         return 0;
     }

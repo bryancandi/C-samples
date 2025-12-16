@@ -1,4 +1,5 @@
-/* Exercise 5-14
+/*
+ * Exercise 5-14
  * sort: sort input lines
  * optional flags:
  * -n   numeric sort
@@ -9,12 +10,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLINES 5000               // max # lines to be sorted 
-#define MAXLEN 1000                 // max length of any input line
-#define ALLOCSIZE 10000             // size of available space
-char *lineptr[MAXLINES];            // pointers to text lines
-static char allocbuf[ALLOCSIZE];    // storage for alloc
-static char *allocp = allocbuf;     // next free position
+#define MAXLINES 5000             /* max # lines to be sorted */
+#define MAXLEN 1000               /* max length of any input line */
+#define ALLOCSIZE 10000           /* size of available space */
+char *lineptr[MAXLINES];          /* pointers to text lines */
+static char allocbuf[ALLOCSIZE];  /* storage for alloc */
+static char *allocp = allocbuf;   /* next free position */
 
 int my_getline(char *, int);
 int readlines(char *lineptr[], int maxlines);
@@ -27,9 +28,9 @@ char *alloc(int);
 int main(int argc, char *argv[])
 {
     int c;
-    int nlines;             // number of input lines read
-    int numeric = 0;        // 1 if numeric sort
-    int reverse = 0;        // 1 if reverse sort
+    int nlines;       /* number of input lines read */
+    int numeric = 0;  /* 1 if numeric sort */
+    int reverse = 0;  /* 1 if reverse sort */
 
     while (--argc > 0 && **++argv == '-')
     {
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
     }
 }
 
-// my_getline: read a line into s, return length; renamed from getline to avoid POSIX conflict
+/* my_getline: read a line into s, return length; renamed from getline to avoid POSIX conflict */
 int my_getline(char s[], int lim)
 {
     int c, i;
@@ -84,7 +85,7 @@ int my_getline(char s[], int lim)
     return i;
 }
 
-// readlines: read input lines
+/* readlines: read input lines */
 int readlines(char *lineptr[], int maxlines)
 {
     int len, nlines;
@@ -99,7 +100,7 @@ int readlines(char *lineptr[], int maxlines)
         }
         else
         {
-            line[len - 1] = '\0'; // delete newline
+            line[len - 1] = '\0';  /* delete newline */
             strcpy(p, line);
             lineptr[nlines++] = p;
         }
@@ -107,7 +108,7 @@ int readlines(char *lineptr[], int maxlines)
     return nlines;
 }
 
-// writelines: write output lines
+/* writelines: write output lines */
 void writelines(char *lineptr[], int nlines, int reverse)
 {
     if (reverse)
@@ -126,7 +127,7 @@ void writelines(char *lineptr[], int nlines, int reverse)
     }
 }
 
-// my_qsort: sort v[left]...v[right] into increasing order; renamed from qsort to avoid stdlib conflict
+/* my_qsort: sort v[left]...v[right] into increasing order; renamed from qsort to avoid stdlib conflict */
 void my_qsort(void *v[], int left, int right,
             int (*comp)(void *, void *))
 {
@@ -151,7 +152,7 @@ void my_qsort(void *v[], int left, int right,
     my_qsort(v, last + 1, right, comp);
 }
 
-// numcmp: compare s1 and s2 numerically
+/* numcmp: compare s1 and s2 numerically */
 int numcmp(char *s1, char *s2)
 {
     double v1, v2;
@@ -172,7 +173,7 @@ int numcmp(char *s1, char *s2)
     }
 }
 
-// swap: interchange v[i] and v[j]
+/* swap: interchange v[i] and v[j] */
 void swap(void *v[], int i, int j)
 {
     void *temp;
@@ -182,15 +183,15 @@ void swap(void *v[], int i, int j)
     v[j] = temp;
 }
 
-// alloc: return pointer to n characters
+/* alloc: return pointer to n characters */
 char *alloc(int n)
 {
-    if (allocbuf + ALLOCSIZE - allocp >= n) // it fits
+    if (allocbuf + ALLOCSIZE - allocp >= n)  /* it fits */
     {
         allocp += n;
-        return allocp - n; // old p
+        return allocp - n;  /* old p */
     }
-    else // not enough room
+    else  /* not enough room */
     {
         return 0;
     }

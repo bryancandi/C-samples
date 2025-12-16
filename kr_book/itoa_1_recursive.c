@@ -1,4 +1,5 @@
-/* Exercise 4-12
+/*
+ * Exercise 4-12
  * itoa: convert n to characters in s using recursion
  */
 
@@ -17,14 +18,14 @@ int main(void)
 
     itoa(n, s);
     printf("Int: %d\n", n);
-    printf("Str: %s\n", s); // prints n converted to string s
+    printf("Str: %s\n", s);  /* prints n converted to string s */
 
     return 0;
 }
 
 void itoa(int n, char s[])
 {
-    static int i = 0; // Initialized once (static)
+    static int i = 0;  /* initialized once (static) */
 
     if (n < 0)
     {

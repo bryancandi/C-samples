@@ -1,4 +1,7 @@
-/* Sample 1.5.3 count lines */
+/*
+ * Sample 1.5.3
+ * Count lines
+ */
 
 #include <stdio.h>
 

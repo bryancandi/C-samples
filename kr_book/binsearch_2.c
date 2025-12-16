@@ -8,7 +8,7 @@ int binsearch(int x, int v[], int n);
 
 int main(void)
 {
-    int x = 18; // searching for this
+    int x = 18;  /* searching for this */
     int num_array[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
     int size = sizeof(num_array) / sizeof(num_array[0]);
 
@@ -24,7 +24,7 @@ int main(void)
     return 0;
 }
 
-// binsearch: find x in v[0] <= v[1] <= ... <=v[n - 1] (array must be sorted)
+/* binsearch: find x in v[0] <= v[1] <= ... <=v[n - 1] (array must be sorted) */
 int binsearch(int x, int v[], int n)
 {
     int low, high, mid;
@@ -44,12 +44,12 @@ int binsearch(int x, int v[], int n)
         }
     }
 
-    if (v[high] == x) // match found
+    if (v[high] == x)  /* match found */
     {
         return high;
     }
     else
     {
-        return -1; // no match
+        return -1;  /* no match */
     }
 }

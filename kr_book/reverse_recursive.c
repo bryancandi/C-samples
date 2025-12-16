@@ -1,5 +1,6 @@
-/* Exercise 4-13
- * reverse - reverse string s in place using recursion
+/*
+ * Exercise 4-13
+ * reverse: reverse string s in place using recursion
  */
 
 #include <stdio.h>
@@ -27,8 +28,10 @@ int main(void)
     return 0;
 }
 
-// reverse: recursively reverse s in place
-// i and len mark the current left and right positions and move inward.
+/*
+ * reverse: recursively reverse s in place
+ * i and len mark the current left and right positions and move inward
+ */
 void reverse(char s[], int i, int len)
 {
     if (i < len)

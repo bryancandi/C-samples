@@ -1,4 +1,5 @@
-/* Exercise 7-8
+/*
+ * Exercise 7-8
  * paginate: print files with pagination
  * Each file starts on a new page with its filename and a running page number
  */
@@ -6,15 +7,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CHARS_PER_LINE 80 // set char count per line
-#define LINES_PER_PAGE 50 // set line count per page
+#define CHARS_PER_LINE 80  /* set char count per line */
+#define LINES_PER_PAGE 50  /* set line count per page */
 
 void filecopy(FILE *, FILE *, const char *filename);
 
 int main(int argc, char *argv[])
 {
     FILE *fp;
-    char *prog = argv[0]; // program name for error output
+    char *prog = argv[0];  /* program name for error output */
 
     if (argc < 2)
     {
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
     exit(0);
 }
 
-// filecopy: copy file ifp to file ofp, paginate files
+/* filecopy: copy file ifp to file ofp, paginate files */
 void filecopy(FILE *ifp, FILE *ofp, const char *filename)
 {
     int c;
@@ -52,7 +53,7 @@ void filecopy(FILE *ifp, FILE *ofp, const char *filename)
     int linenum = 0;
     int pagenum = 1;
 
-    // print header for first page
+    /* print header for first page */
     fprintf(ofp, "File: %s\t\tPage: %d\n\n", filename, pagenum);
 
     while ((c = getc(ifp)) != EOF)
@@ -62,7 +63,7 @@ void filecopy(FILE *ifp, FILE *ofp, const char *filename)
 
         if (c == '\n')
         {
-            charnum = 0; // reset for next line
+            charnum = 0;  /* reset for next line */
             linenum++;
         }
         else if (charnum >= CHARS_PER_LINE)
@@ -73,9 +74,9 @@ void filecopy(FILE *ifp, FILE *ofp, const char *filename)
         }
         if (linenum >= LINES_PER_PAGE)
         {
-            linenum = 0; // reset for next page
+            linenum = 0;  /* reset for next page */
             pagenum++;
-            putc('\f', ofp); // form feed: starts a new page for printer or visual separation
+            putc('\f', ofp);  /* form feed: starts a new page for printer or visual separation */
             fprintf(ofp, "File: %s\t\tPage: %d\n\n", filename, pagenum);
         }
     }

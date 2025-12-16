@@ -1,4 +1,5 @@
-/* Exercise 3-3
+/*
+ * Exercise 3-3
  * expand shorthand - a-z expands to abc...xyz, 0-9 expands to 0123456789
  * a-z0-9 expands to abc...xyz0...9
  * leading and trailing '-' are taken literally and printed
@@ -35,19 +36,19 @@ void expand(char s1[], char s2[])
     int i, j;
     i = j = 0;
 
-    while ((c = s1[i++]) != '\0') // get char from s1 as char c
+    while ((c = s1[i++]) != '\0')  /* get char from s1 as char c */
     {
         if (s1[i] == '-' && s1[i + 1] >= c)
         {
             i++;
-            while (c < s1[i]) // expand shorthand
+            while (c < s1[i])  /* expand shorthand */
             {
                 s2[j++] = c++;
             }
         }
         else
         {
-            s2[j++] = c; // otherwise copy characters into s2
+            s2[j++] = c;  /* otherwise copy characters into s2 */
         }
     }
     s2[j] = '\0';

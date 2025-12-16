@@ -1,5 +1,6 @@
-/* Sample 4.2 
- * rudimentary calculator using atof
+/*
+ * Sample 4.2 
+ * Rudimentary calculator using atof
  */
 
 #include <ctype.h>
@@ -28,7 +29,7 @@ double atof(char s[])
     double val, power;
     int i, sign;
 
-    for (i = 0; isspace(s[i]); i++) // skip white space
+    for (i = 0; isspace(s[i]); i++)  /* skip white space */
         ;
     sign = (s[i] == '-') ? -1 : 1;
     if (s[i] == '+' || s[i] == '-')

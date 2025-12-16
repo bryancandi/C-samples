@@ -1,4 +1,5 @@
-/* Sample 7.1
+/*
+ * Sample 7.1
  * lower: convert input to lower case (using library function)
  */
 

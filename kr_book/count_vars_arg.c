@@ -1,4 +1,5 @@
-/* Exercise 6-2
+/*
+ * Exercise 6-2
  * Read a C program and print each group of variables that contain
  * the same first num (default 6) characters and print them
  * in alphabetical order. num can be specified by command-line arg.
@@ -9,11 +10,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct tnode {              // the tree node
-    char *word;             // points to the text
-    int match;              // match found
-    struct tnode *left;     // left child
-    struct tnode *right;    // right child
+struct tnode {            /* the tree node */
+    char *word;           /* points to the text */
+    int match;            /* match found */
+    struct tnode *left;   /* left child */
+    struct tnode *right;  /* right child */
 };
 
 #define MAXWORD 100
@@ -28,17 +29,19 @@ struct tnode *talloc(void);
 void freetree(struct tnode *);
 int getword(char *, int);
 
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];  /* buffer for ungetch */
+int bufp = 0;       /* next free position in buf */
 
-// print in alphabetical order each group of variable names
-// identical in the first num characters (default 6)
+/*
+ * print in alphabetical order each group of variable names
+ * identical in the first num characters (default 6)
+ */
 int main(int argc, char *argv[])
 {
     struct tnode *root;
     char word[MAXWORD];
-    int found = NO; // YES if match was found
-    int num; // number of the first identical characters
+    int found = NO;  /* YES if match was found */
+    int num;  /* number of the first identical characters */
 
     num = (--argc && (*++argv)[0] == '-') ? atoi(argv[0] + 1) : 6;
     root = NULL;
@@ -55,14 +58,14 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// addtreex: add a node with w, at or below p
+/* addtreex: add a node with w, at or below p */
 struct tnode *addtreex(struct tnode *p, char *w, int num, int *found)
 {
     int cond;
 
-    if (p == NULL) // a new word has arrived
+    if (p == NULL)  /* a new word has arrived */
     {
-        p = talloc(); // make a new node
+        p = talloc();  /* make a new node */
         p->word = strdup(w);
         p->match = *found;
         p->left = p->right = NULL;
@@ -78,7 +81,7 @@ struct tnode *addtreex(struct tnode *p, char *w, int num, int *found)
     return p;
 }
 
-// compare: compare words and update p->match
+/* compare: compare words and update p->match */
 int compare(char *s, struct tnode *p, int num, int *found)
 {
     int i;
@@ -91,7 +94,7 @@ int compare(char *s, struct tnode *p, int num, int *found)
             return 0;
         }
     }
-    if (i >= num) // identical in first num characters?
+    if (i >= num)  /* identical in first num characters? */
     {
         *found = YES;
         p->match = YES;
@@ -99,7 +102,7 @@ int compare(char *s, struct tnode *p, int num, int *found)
     return *s - *t;
 }
 
-// treexprint: in-order print of tree p if p->match == YES
+/* treexprint: in-order print of tree p if p->match == YES */
 void treexprint(struct tnode *p)
 {
     if (p != NULL)
@@ -113,25 +116,25 @@ void treexprint(struct tnode *p)
     }
 }
 
-// talloc: make a tnode
+/* talloc: make a tnode */
 struct tnode *talloc(void)
 {
     return (struct tnode *) malloc(sizeof(struct tnode));
 }
 
-// freetree: free allocated memory
+/* freetree: free allocated memory */
 void freetree(struct tnode *p)
 {
     if (p != NULL)
     {
         freetree(p->left);
         freetree(p->right);
-        free(p->word); // free the duplicated string
-        free(p); // free the node itself
+        free(p->word);  /* free the duplicated string */
+        free(p);  /* free the node itself */
     }
 }
 
-// getword: get next word or character from input
+/* getword: get next word or character from input */
 int getword(char *word, int lim)
 {
     int c, next, getch(void);
@@ -147,7 +150,7 @@ int getword(char *word, int lim)
     {
         *w++ = c;
     }
-    if (c == '/') // handle single-line comments
+    if (c == '/')  /* handle single-line comments */
     {
         next = getch();
         if (next == '/')
@@ -160,26 +163,26 @@ int getword(char *word, int lim)
             *w = '\0';
             return c;
         }
-        if (next == '*') // handle multi-line comments
+        if (next == '*')  /* handle multi-line comments */
         {
             int prev = 0;
             while ((c = getch()) != EOF)
             {
                 if (prev == '*' && c == '/')
                 {
-                    break; // end of comment
+                    break;  /* end of comment */
                 }
                 prev = c;
                 newline = (c == '\n');
             }
         }
     }
-    if (c == '"') // skip string literals
+    if (c == '"')  /* skip string literals */
     {
         next = getch();
         if (next == '\\')
         {
-            getch(); // skip escaped character
+            getch();  /* skip escaped character */
         }
         while (next != '"' && next != EOF)
         {
@@ -189,12 +192,12 @@ int getword(char *word, int lim)
         *w = '\0';
         return next;
     }
-    if (c == '\'') // skip character constants
+    if (c == '\'')  /* skip character constants */
     {
         next = getch();
         if (next == '\\')
         {
-            getch(); // skip escape char
+            getch();  /* skip escape char */
         }
         while (next != '\'' && next != EOF)
         {
@@ -204,7 +207,7 @@ int getword(char *word, int lim)
         *w = '\0';
         return next;
     }
-    if (c == '#' && newline) // skip preprocessor directives
+    if (c == '#' && newline)  /* skip preprocessor directives */
     {
         while (c != '\n' && c != EOF)
         {
@@ -214,7 +217,7 @@ int getword(char *word, int lim)
         *w = '\0';
         return c;
     }
-    if (!isalpha(c) && c != '_') // recognize _ in identifier names
+    if (!isalpha(c) && c != '_')  /* recognize _ in identifier names */
     {
         *w = '\0';
         return c;
@@ -233,13 +236,13 @@ int getword(char *word, int lim)
     return word[0];
 }
     
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

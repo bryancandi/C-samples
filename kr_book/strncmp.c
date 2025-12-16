@@ -1,10 +1,11 @@
-/* Exercise 5-5
+/*
+ * Exercise 5-5
  * strncmp: compare n chars from t to the end of s
  */
 
 #include <stdio.h>
 
-#define CHARS 10 // number of characters to compare
+#define CHARS 10  /* number of characters to compare */
 
 int my_strncmp(char *s, char *t, int n);
 
@@ -35,5 +36,5 @@ int my_strncmp(char *s, char *t, int n)
             return 0;
         }
     }
-    return *s - *t; // non-zero signifies mismatch
+    return *s - *t;  /* non-zero signifies mismatch */
 }

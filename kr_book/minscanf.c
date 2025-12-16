@@ -1,4 +1,5 @@
-/* Exercise 7-4
+/*
+ * Exercise 7-4
  * minscanf: minimal private version of scanf
  */
 
@@ -33,7 +34,7 @@ void minscanf(char *fmt, ...)
     va_start(ap, fmt);
     for (p = fmt; *p; p++)
     {
-        if (*p != '%') // ignore literal characters in input
+        if (*p != '%')  /* ignore literal characters in input */
         {
             continue;
         }

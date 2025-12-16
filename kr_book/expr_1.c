@@ -1,4 +1,5 @@
-/* Exercise 5-10
+/*
+ * Exercise 5-10
  * Reverse Polish Notation calculator; command-line arg version
  */
 
@@ -8,17 +9,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXVAL 100  // max depth of value stack
+#define MAXVAL 100   /* max depth of value stack */
 
-int sp = 0;         // next free stack position
-double val[MAXVAL]; // value stack
+int sp = 0;          /* next free stack position */
+double val[MAXVAL];  /* value stack */
 
 void push(double);
 double pop(void);
 void mathfnc(char []);
 void clear(void);
 
-// Reverse Polish Calculator
+/* Reverse Polish Calculator */
 int main(int argc, char *argv[])
 {
     double op2;
@@ -55,11 +56,11 @@ int main(int argc, char *argv[])
         } else if (isdigit(arg[0]) || (arg[0] == '-' && isdigit(arg[1]))) {
             push(atof(arg));
         } else {
-            mathfnc(arg);  // sin, cos, pow, etc.
+            mathfnc(arg);  /* sin, cos, pow, etc. */
         }
     }
 
-    // Print the final result
+    /* print the final result */
     if (sp > 0)
         printf("\t%.8g\n", pop());
     else
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// push: push f onto value stack
+/* push: push f onto value stack */
 void push(double f)
 {
     if (sp < MAXVAL)
@@ -81,7 +82,7 @@ void push(double f)
     }
 }
 
-// pop: pop and return top value from stack
+/* pop: pop and return top value from stack */
 double pop(void)
 {
     if (sp > 0)
@@ -95,7 +96,7 @@ double pop(void)
     }
 }
 
-// mathfnc: check string s for supported math functions
+/* mathfnc: check string s for supported math functions */
 void mathfnc(char s[])
 {
     double op2;
@@ -123,7 +124,7 @@ void mathfnc(char s[])
     }
 }
 
-// clear: clear the stack
+/* clear: clear the stack */
 void clear(void)
 {
     sp = 0;

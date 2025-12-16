@@ -1,6 +1,7 @@
-/* Sample 5.2 - simplified alternate version
+/*
+ * Sample 5.2
+ * Simplified alternate version; no getch / ungetch
  * getint: get next integer from input into *pn
- * modified to not use getch and ungetch
  */
 
 #include <ctype.h>
@@ -12,9 +13,9 @@ int main(void)
 {
     int n;
 
-    if (getint(&n) != 0) // pass address of n into getint
+    if (getint(&n) != 0)  /* pass address of n into getint */
     {
-        printf("%d\n", n); // print n directly modified by getint
+        printf("%d\n", n);  /* print n directly modified by getint */
     }
     else
     {
@@ -24,11 +25,11 @@ int main(void)
     return 0;
 }
 
-int getint(int *pn) // pn points to int where the parsed number will be stored
+int getint(int *pn)  /* pn points to int where the parsed number will be stored */
 {
     int c, sign;
 
-    while (isspace(c = getchar())) // skip white space
+    while (isspace(c = getchar()))  /* skip white space */
         ;
     if (!isdigit(c) && c != EOF && c != '+' && c != '-')
     {

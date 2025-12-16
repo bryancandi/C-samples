@@ -1,4 +1,5 @@
-/* Sample 2.7
+/*
+ * Sample 2.7
  * lower: convert c to lower case (ASCII)
  */
 
@@ -20,8 +21,10 @@ int main(void)
     return 0;
 }
 
-// converts an uppercase ASCII letter 'c' to lowercase using the formula c + 'a' - 'A'
-// otherwise return unmodified
+/*
+ * converts an uppercase ASCII letter 'c' to lowercase using the formula c + 'a' - 'A'
+ * otherwise return unmodified
+ */
 int lower(int c)
 {
     if (c >= 'A' && c <= 'Z')

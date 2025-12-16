@@ -1,5 +1,6 @@
-/* Sample 7.4
- * read input lines containing dates formatted as:
+/*
+ * Sample 7.4
+ * Read input lines containing dates formatted as:
  * 25 Dec 2025
  * mm/dd/yyyy
  */
@@ -18,18 +19,18 @@ int main(void)
 
     while (fgets(buffer, BUFFER, stdin))
     {
-        buffer[strcspn(buffer, "\n")] = '\0'; // remove trailing newline
+        buffer[strcspn(buffer, "\n")] = '\0';  /* remove trailing newline */
         if (sscanf(buffer, "%d %s %d", &day, monthname, &year) == 3)
         {
-            printf("valid: %s\n", buffer); // 25 Dec 2025 date form
+            printf("valid: %s\n", buffer);  /* 25 Dec 2025 date form */
         }
         else if (sscanf(buffer, "%d/%d/%d", &month, &day, &year) == 3)
         {
-            printf("valid: %s\n", buffer); // mm/dd/yyyy date form
+            printf("valid: %s\n", buffer);  /* mm/dd/yyyy date form */
         }
         else
         {
-            printf("invalid: %s\n", buffer); // invalid form
+            printf("invalid: %s\n", buffer);  /* invalid form */
         }
     }
     return 0;

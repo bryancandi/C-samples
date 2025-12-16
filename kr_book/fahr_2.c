@@ -1,4 +1,7 @@
-/* Sample 1.2 - Fahr to Celsius floating-point version */
+/*
+ * Sample 1.2
+ * Fahr to Celsius: floating-point version
+ */
 
 #include <stdio.h>
 
@@ -7,9 +10,9 @@ int main(void)
     float fahr, celsius;
     int lower, upper, step;
 
-    lower = 0;      // lower limit
-    upper = 300;    // upper limit
-    step = 20;      // step size
+    lower = 0;    /* lower limit */
+    upper = 300;  /* upper limit */
+    step = 20;    /* step size */
 
     fahr = lower;
     while (fahr <= upper)

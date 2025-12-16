@@ -1,5 +1,6 @@
-/* Sample 3.5
- * shellsort - sort v[0]...v[n-1] into increasing order
+/*
+ * Sample 3.5
+ * shellsort: sort v[0]...v[n-1] into increasing order
  */
 
 #include <stdio.h>

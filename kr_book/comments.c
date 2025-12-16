@@ -1,4 +1,7 @@
-/* Exercise 1-23 - remove all comments from C source file */
+/*
+ * Exercise 1-23
+ * Remove all comments from C source file
+ */
 
 #include <stdio.h>
 
@@ -10,14 +13,14 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    FILE *src = fopen(argv[1], "r"); // open source file to read
+    FILE *src = fopen(argv[1], "r");  /* open source file to read */
     if (src == NULL)
     {
         printf("%s: Source file '%s' does not exist\n", argv[0], argv[1]);
         return 2;
     }
 
-    FILE *dst = fopen(argv[2], "w"); // open destination file to write
+    FILE *dst = fopen(argv[2], "w");  /* open destination file to write */
     if (dst == NULL)
     {
         printf("%s: Cannot create destination file '%s'\n", argv[0], argv[2]);
@@ -33,12 +36,12 @@ int main(int argc, char *argv[])
             next = fgetc(src);
             if (next == '*')
             {
-                // inside block comment
+                /* inside block comment */
                 while ((c = fgetc(src)) != EOF)
                 {
                     if (c == '\n')
                     {
-                        fputc('\n', dst); // preserve line structure
+                        fputc('\n', dst);  /* preserve line structure */
                     }
                     else if (c == '*')
                     {
@@ -49,7 +52,7 @@ int main(int argc, char *argv[])
                         }
                         else
                         {
-                            // go back one char if no '/'
+                            /* go back one char if no '/' */
                             ungetc(nnext, src);
                         }
                     }
@@ -57,7 +60,7 @@ int main(int argc, char *argv[])
             }
             else if (next == '/')
             {
-                // inside line comment
+                /* inside line comment */
                 while ((c = fgetc(src)) != EOF && c != '\n')
                     ;
                 if (c == '\n')
@@ -67,7 +70,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                // Not a comment — output both
+                /* Not a comment — output both */
                 fputc('/', dst);
                 fputc(next, dst);
             }

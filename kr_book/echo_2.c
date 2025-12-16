@@ -1,5 +1,6 @@
-/* Sample 5.10
- * echo command-line arguments; 2nd version
+/*
+ * Sample 5.10
+ * echo: command-line arguments; 2nd version
  */
 
 #include <stdio.h>

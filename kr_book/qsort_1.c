@@ -1,4 +1,5 @@
-/* Sample 4.10
+/*
+ * Sample 4.10
  * qsort: sort v[left]...v[right] into increasing order using recursion
  */
 
@@ -27,25 +28,25 @@ void qsort(int v[], int left, int right)
     int i, last;
     void swap(int v[], int i, int j);
 
-    if (left >= right) // do nothing if array contains
-        {              // fewer than two elements
+    if (left >= right)  /* do nothing if array contains */
+        {               /* fewer than two elements */
             return;
         }
-    swap(v, left, (left + right) / 2); // move partition elem
-    last = left;                       // to v[0]
-    for (i = left + 1; i <= right; i++)  // partition
+    swap(v, left, (left + right) / 2);   /* move partition elem */
+    last = left;                         /* to v[0] */
+    for (i = left + 1; i <= right; i++)  /* partition */
     {
         if (v[i] < v[left])
         {
             swap(v, ++last, i);
         }
     }
-    swap(v, left, last); // restore partition elem
+    swap(v, left, last);  /* restore partition elem */
     qsort(v, left, last - 1);
     qsort(v, last + 1, right);
 }
 
-// swap: interchange v[i] and v[j]
+/* swap: interchange v[i] and v[j] */
 void swap(int v[], int i, int j)
 {
     int temp;

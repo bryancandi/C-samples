@@ -1,4 +1,6 @@
-/* Sample 3.8 - goto example function
+/*
+ * Sample 3.8
+ * goto example function
  * goto and labels: not commonly used or necessary
  */
 
@@ -36,11 +38,11 @@ int f_goto(int a[], int b[], int n, int m)
         {
             if (a[i] == b[j])
             {
-                goto found; // goto label 'found'
+                goto found;  /* goto label 'found' */
             }
         }
     }
-    return 0; // no match
+    return 0;  /* no match */
 
 found:
     return 1;

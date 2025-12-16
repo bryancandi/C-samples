@@ -1,4 +1,5 @@
-/* Sample 5.10
+/*
+ * Sample 5.10
  * find: print lines that match pattern from 1st arg; 1st version
  */
 

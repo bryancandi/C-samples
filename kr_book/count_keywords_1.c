@@ -1,4 +1,5 @@
-/* Sample 6.3
+/* 
+ * Sample 6.3
  * Arrays of Structures
  * Count C keywords
  */
@@ -28,10 +29,10 @@ struct key {
 int getword(char *, int);
 int binsearch(char *, struct key *, int);
 
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];  /* buffer for ungetch */
+int bufp = 0;       /* next free position in buf */
 
-// count c keywords
+/* count C keywords */
 int main(void)
 {
     int n;
@@ -57,7 +58,7 @@ int main(void)
     return 0;
 }
 
-// binsearch: find word in tab[0]...tab[n-1]
+/* binsearch: find word in tab[0]...tab[n-1] */
 int binsearch(char *word, struct key tab[], int n)
 {
     int cond;
@@ -84,7 +85,7 @@ int binsearch(char *word, struct key tab[], int n)
     return -1;
 }
 
-// getword: get next word or character from input
+/* getword: get next word or character from input */
 int getword(char *word, int lim)
 {
     int c, getch(void);
@@ -114,13 +115,13 @@ int getword(char *word, int lim)
     return word[0];
 }
     
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

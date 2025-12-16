@@ -1,4 +1,5 @@
-/* Exercise 5-5
+/*
+ * Exercise 5-5
  * strncat: concatenate n chars from t to the end of s
  */
 
@@ -26,11 +27,11 @@ void my_strncat(char *s, char *t, int n)
     int i, j;
 
     i = j = 0;
-    while (*s != '\0') // find end of s
+    while (*s != '\0')  /* find end of s */
     {
-        s++; // move pointer
+        s++;  /* move pointer */
     }
-    while (n-- > 0 && *t != '\0') // copy t to end of s until n is 0
+    while (n-- > 0 && *t != '\0')  /* copy t to end of s until n is 0 */
     {
         *s++ = *t++;
     }

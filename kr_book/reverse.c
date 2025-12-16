@@ -1,5 +1,6 @@
-/* Sample 3.5
- * reverse - reverse string s in place
+/*
+ * Sample 3.5
+ * reverse: reverse string s in place
  */
 
 #include <stdio.h>

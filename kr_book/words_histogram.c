@@ -2,8 +2,7 @@
 
 #include <stdio.h>
 
-// print histogram the length of the words entered
-
+/* print histogram the length of the words entered */
 int main(void)
 {
     int c, h;

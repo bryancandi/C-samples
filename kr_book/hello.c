@@ -1,4 +1,7 @@
-/* Sample 1.1 - Hello World*/
+/*
+ * Sample 1.1
+ * Hello World
+ */
 
 #include <stdio.h>
 

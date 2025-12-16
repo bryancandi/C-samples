@@ -1,4 +1,5 @@
-/* Sample 5.5
+/*
+ * Sample 5.5
  * strcpy: copy t to s; pointer version 1
  */
 

@@ -6,15 +6,15 @@
 int my_getline(char[], int maxline);
 void copy(char to[], char from[]);
 
-// print longest input line up to 'MAXLINE'; print length beyond max
+/* print longest input line up to 'MAXLINE'; print length beyond max */
 int main(void)
 {
-    int total = 0;      // variable to store line length beyond the 'MAXLINE' value
-    int buffer = 0;     // temporarily store 'len' values until a newline is reached
-    int len;            // current line length
-    int max;            // maximum length seen so far
-    char line[MAXLINE];     // current input line
-    char longest[MAXLINE];  // longest line saved here
+    int total = 0;   /* variable to store line length beyond the 'MAXLINE' value */
+    int buffer = 0;  /* temporarily store 'len' values until a newline is reached */
+    int len;         /* current line length */
+    int max;         /* maximum length seen so far */
+    char line[MAXLINE];     /* current input line */
+    char longest[MAXLINE];  /* longest line saved here */
 
     max = 0;
     while ((len = my_getline(line, MAXLINE)) > 0)
@@ -34,7 +34,7 @@ int main(void)
             copy(longest, line);
         }
     }
-    if (max > 0)    // there was a line
+    if (max > 0)  /* there was a line */
     {
         printf("Length: %i\n", total);
         printf("Line: %s", longest);
@@ -42,7 +42,7 @@ int main(void)
     return 0;
 }
 
-// my_getline: read a line into s, return length
+/* my_getline: read a line into s, return length */
 int my_getline(char s[], int lim)
 {
     int c, i;
@@ -60,7 +60,7 @@ int my_getline(char s[], int lim)
     return i;
 }
 
-// copy: copy 'from' into 'to'; assume to is big enough
+/* copy: copy 'from' into 'to'; assume to is big enough */
 void copy(char to[], char from[])
 {
     int i;

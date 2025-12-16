@@ -1,11 +1,12 @@
-/* Sample 7.3 / Exercise 7-3
+/*
+ * Sample 7.3 / Exercise 7-3
  * minprintf: minimal printf with variable argument list
  */
 
 #include <stdarg.h>
 #include <stdio.h>
 
-// declaration ending with '...' means the number and types of arguments may vary
+/* declaration ending with '...' means the number and types of arguments may vary */
 void minprintf(char *fmt, ...);
 
 int main(void)
@@ -14,7 +15,7 @@ int main(void)
     int n = 10;
     double d = 10.5;
 
-    // add more tests or modify existing:
+    /* add more tests or modify existing: */
     minprintf("This is some text...\n");
     minprintf("string: %s\n", string);
     minprintf("int   : %d\n", n);
@@ -25,13 +26,13 @@ int main(void)
 
 void minprintf(char *fmt, ...)
 {
-    va_list ap; // will point to argument list after va_start
+    va_list ap;  /* will point to argument list after va_start */
     char *p, *sval;
     int ival;
     double dval;
     unsigned oval, uval, xval;
 
-    va_start(ap, fmt); // make ap point to first unnamed arg
+    va_start(ap, fmt);  /* make ap point to first unnamed arg */
     for (p = fmt; *p; p++)
     {
         if (*p != '%')
@@ -85,5 +86,5 @@ void minprintf(char *fmt, ...)
             break;
         }
     }
-    va_end(ap); // clean up when done
+    va_end(ap);  /* clean up when done */
 }

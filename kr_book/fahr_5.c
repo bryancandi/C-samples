@@ -2,9 +2,9 @@
 
 #include <stdio.h>
 
-#define LOWER 0    // Lower limit of temperature table
-#define UPPER 300  // Upper limit
-#define STEP 20    // Step size
+#define LOWER 0    /* lower limit */
+#define UPPER 300  /* upper limit */
+#define STEP 20    /* step size */
 
 int main(void)
 {

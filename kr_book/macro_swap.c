@@ -1,4 +1,5 @@
-/* Exercise 4-14
+/*
+ * Exercise 4-14
  * swap(t, x, y): a macro that interchanges two arguments of type t
  * temp is defined as a temporary variable of type t
  */

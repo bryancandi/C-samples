@@ -1,14 +1,15 @@
 /* Sample 4.1 */
 
 #include <stdio.h>
-#define MAXLINE 1000 // maximum input line length
+
+#define MAXLINE 1000  /* maximum input line length */
 
 int my_getline(char line[], int max);
 int strindex(char source[], char searchfor[]);
 
-char pattern[] = "ould"; // pattern to search for
+char pattern[] = "ould";  /* pattern to search for */
 
-// find all lines matching pattern
+/* find all lines matching pattern */
 int main(void)
 {
     char line[MAXLINE];
@@ -25,7 +26,7 @@ int main(void)
     return found;
 }
 
-// my_getline: get line into s, return length (renamed to avoid conflict with POSIX getline())
+/* my_getline: get line into s, return length (renamed to avoid conflict with POSIX getline()) */
 int my_getline(char s[], int lim)
 {
     int c, i;
@@ -43,7 +44,7 @@ int my_getline(char s[], int lim)
     return i;
 }
 
-// strindex: return index of t in s, -1 if none
+/* strindex: return index of t in s, -1 if none */
 int strindex(char s[], char t[])
 {
     int i, j, k;

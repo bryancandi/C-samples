@@ -24,7 +24,7 @@ int main(void)
     return 0;
 }
 
-// my_strlen: return length of 's' excluding '\0'
+/* my_strlen: return length of 's' excluding '\0' */
 int my_strlen(char *s)
 {
     int n;

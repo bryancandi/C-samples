@@ -1,4 +1,5 @@
-/* Exercise 3-2 
+/*
+ * Exercise 3-2 
  * convert tabs and newline characters into visible escape sequences
  */
 

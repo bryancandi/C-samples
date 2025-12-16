@@ -1,4 +1,5 @@
-/* Exercise 4-2
+/*
+ * Exercise 4-2
  * atof: handle scientific notation
  */
 
@@ -33,7 +34,7 @@ double my_atof(char s[])
     int exp = 0;
     int exp_sign = 1;
 
-    for (i = 0; isspace(s[i]); i++) // skip white space
+    for (i = 0; isspace(s[i]); i++)  /* skip white space */
         ;
     sign = (s[i] == '-') ? -1 : 1;
     if (s[i] == '+' || s[i] == '-')

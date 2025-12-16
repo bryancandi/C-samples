@@ -1,15 +1,18 @@
-/* Exercise 2-2 replace for loop with equivalent */
+/*
+ * Exercise 2-2
+ * Replace for loop with equivalent
+ */
 
 #include <stdio.h>
 #define MAXLINE 10
 
 int my_getline(char[], int maxline);
 
-// print input line
+/* print input line */
 int main(void)
 {
-    int len;    // current line length
-    char line[MAXLINE];     // current input line
+    int len;  /* current line length */
+    char line[MAXLINE];  /* current input line */
 
     while ((len = my_getline(line, MAXLINE)) > 0)
     {
@@ -18,7 +21,7 @@ int main(void)
     return 0;
 }
 
-// my_getline: read a line into s, return length
+/* my_getline: read a line into s, return length */
 int my_getline(char s[], int lim)
 {
     int c;
@@ -30,12 +33,12 @@ int my_getline(char s[], int lim)
 
         if (c == EOF)
         {
-            break; // stop on EOF
+            break;  /* stop on EOF */
         }
 
         if (c == '\n')
         {
-            break; // stop on newline
+            break;  /* stop on newline */
         }
 
         s[i] = c;

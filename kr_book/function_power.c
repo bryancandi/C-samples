@@ -1,11 +1,13 @@
-/* Sample 1.7 power function */
+/*
+ * Sample 1.7
+ * Power function
+ */
 
 #include <stdio.h>
 
 int power(int m, int n);
 
-// test power function
-
+/* test power function */
 int main(void)
 {
     int i;
@@ -17,7 +19,7 @@ int main(void)
     return 0;
 }
 
-// power: raise base to the n-th power; n >= 0
+/* power: raise base to the n-th power; n >= 0 */
 int power(int base, int n)
 {
     int i, p;

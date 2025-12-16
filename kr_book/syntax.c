@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
     remove_comments(src_file, tmp_file);
 
-    // reposition file pointer to start of file for reading (it is currently at EOF after writing)
+    /* reposition file pointer to start of file for reading (it is currently at EOF after writing) */
     rewind(tmp_file);
 
     delim_check(tmp_file);
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     fclose(src_file);
     fclose(tmp_file);
 
-    // delete file when fininshed
+    /* delete file when fininshed */
     remove("tmp_file.c");
 
     return 0;
@@ -65,12 +65,12 @@ void remove_comments(FILE *src_file, FILE *tmp_file)
             next = fgetc(src_file);
             if (next == '*')
             {
-                // inside block comment
+                /* inside block comment */
                 while ((c = fgetc(src_file)) != EOF)
                 {
                     if (c == '\n')
                     {
-                        fputc('\n', tmp_file); // preserve line structure
+                        fputc('\n', tmp_file);  /* preserve line structure */
                     }
                     else if (c == '*')
                     {
@@ -81,7 +81,7 @@ void remove_comments(FILE *src_file, FILE *tmp_file)
                         }
                         else
                         {
-                            // go back one char if no '/'
+                            /* go back one char if no '/' */
                             ungetc(nnext, src_file);
                         }
                     }
@@ -89,7 +89,7 @@ void remove_comments(FILE *src_file, FILE *tmp_file)
             }
             else if (next == '/')
             {
-                // inside line comment
+                /* inside line comment */
                 while ((c = fgetc(src_file)) != EOF && c != '\n')
                     ;
                 if (c == '\n')
@@ -99,7 +99,7 @@ void remove_comments(FILE *src_file, FILE *tmp_file)
             }
             else
             {
-                // Not a comment — output both
+                /* Not a comment — output both */
                 fputc('/', tmp_file);
                 fputc(next, tmp_file);
             }
@@ -120,14 +120,14 @@ void delim_check(FILE *file)
     int extra_parens[MAX_ERRORS];
     int extra_count = 0;
 
-    // read the file one char at a time and check for balance
+    /* read the file one char at a time and check for balance */
     while ((c = fgetc(file)) != EOF)
     {
         if (c == '(')
         {
             if (open_count < MAX_ERRORS)
             {
-                // add entry for opening paren at position 'open++'
+                /* add entry for opening paren at position 'open++' */
                 open_parens[open_count++] = line_counter;
             }
             else
@@ -139,7 +139,7 @@ void delim_check(FILE *file)
         {
             if (open_count > 0)
             {
-                // matched one opening paren; pop it
+                /* matched one opening paren; pop it */
                 --open_count;
             }
             else
@@ -194,8 +194,11 @@ void delim_check(FILE *file)
         }
         printf(".\n");
     }
-    // TO-DO: add other delimiter balance checks [] {} etc.
-    // Check for chars between "" or '' and ignore
-    // Change delim_function to int, return values to main
-    // Move printf statements out of delim_function to main; print based on return value
+    
+    /*
+     *TO-DO: add other delimiter balance checks [] {} etc.
+     * Check for chars between "" or '' and ignore
+     * Change delim_function to int, return values to main
+     * Move printf statements out of delim_function to main; print based on return value
+     */
 }

@@ -1,8 +1,11 @@
-/* Sample 1.5 copy version 1 */
+/*
+ * Sample 1.5
+ * copy: version 1
+ */
 
 #include <stdio.h>
 
-// copy input to output until EOF
+/* copy input to output until EOF */
 
 int main(void)
 {

@@ -41,8 +41,8 @@ int my_getline(char s[], int lim)
 
 void entab(char in[], char out[])
 {
-    int i = 0;  // input index
-    int j = 0;  // output index
+    int i = 0;  /* input index */
+    int j = 0;  /* output index */
     int counter = 0;
 
     while (in[i] != '\0')

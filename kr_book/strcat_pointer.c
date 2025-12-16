@@ -1,4 +1,5 @@
-/* Exercise 5-3
+/*
+ * Exercise 5-3
  * strcat: concatenate t to end of s; pointer version
  */
 
@@ -24,10 +25,10 @@ void my_strcat(char *s, char *t)
     int i, j;
 
     i = j = 0;
-    while (*s != '\0') // find end of s
+    while (*s != '\0')  /* find end of s */
     {
-        s++; // move pointer
+        s++;  /* move pointer */
     }
-    while ((*s++ = *t++) != '\0') // copy t to end of s
+    while ((*s++ = *t++) != '\0')  /* copy t to end of s */
         ;
 }

@@ -1,4 +1,5 @@
-/* Exercise 5-8
+/*
+ * Exercise 5-8
  * Add error checking
  */
 
@@ -8,7 +9,7 @@ int day_of_year(int year, int month, int day);
 int month_day(int year, int yearday, int *pmonth, int *pday);
 void get_input(int *n);
 
-// daytable[0] = non-leap year, daytable[1] = leap year
+/* daytable[0] = non-leap year, daytable[1] = leap year */
 static char daytable[2][13] = {
     {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
@@ -19,7 +20,7 @@ int main(void)
     int year, month, day;
     int yearday, out_month, out_day;
 
-    // day_of_year
+    /* day_of_year */
     printf("Enter year: ");
     get_input(&year);
     printf("Enter month: ");
@@ -36,7 +37,7 @@ int main(void)
     printf("Day of year: %d\n\n", doy);
     
 
-    // month_day
+    /* month_day */
     printf("Enter year: ");
     get_input(&year);
     printf("Enter day of year: ");
@@ -53,7 +54,7 @@ int main(void)
     return 0;
 }
 
-// day_of_year: set day of year from month and day
+/* day_of_year: set day of year from month and day */
 int day_of_year(int year, int month, int day)
 {
     int i, leap;
@@ -78,7 +79,7 @@ int day_of_year(int year, int month, int day)
     return day;
 }
 
-// month_day: set month and day from day of year
+/* month_day: set month and day from day of year */
 int month_day(int year, int yearday, int *pmonth, int *pday)
 {
     int i, j, leap;
@@ -89,7 +90,7 @@ int month_day(int year, int yearday, int *pmonth, int *pday)
         return -1;
     }
     leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
-    for (j = 1; j < 13; j++) // count total days in entered year
+    for (j = 1; j < 13; j++)  /* count total days in entered year */
     {
         maxdays += daytable[leap][j];
     }
@@ -106,7 +107,7 @@ int month_day(int year, int yearday, int *pmonth, int *pday)
     return 0;
 }
 
-// get_input: get user input with error checking
+/* get_input: get user input with error checking */
 void get_input(int *n)
 {
     while (scanf("%d", n) != 1)

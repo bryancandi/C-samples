@@ -1,4 +1,5 @@
-/* Sample 6.4
+/*
+ * Sample 6.4
  * Pointers to Structures
  * Count C keywords
  */
@@ -29,10 +30,10 @@ struct key
 int getword(char *, int);
 struct key *binsearch(char *, struct key *, int);
 
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];  /* buffer for ungetch */
+int bufp = 0;       /* next free position in buf */
 
-// count c keywords; pointer version
+/* count C keywords; pointer version */
 int main(void)
 {
     char word[MAXWORD];
@@ -58,7 +59,7 @@ int main(void)
     return 0;
 }
 
-// binsearch: find word in tab[0]...tab[n-1]
+/* binsearch: find word in tab[0]...tab[n-1] */
 struct key *binsearch(char *word, struct key *tab, int n)
 {
     int cond;
@@ -85,7 +86,7 @@ struct key *binsearch(char *word, struct key *tab, int n)
     return NULL;
 }
 
-// getword: get next word or character from input
+/* getword: get next word or character from input */
 int getword(char *word, int lim)
 {
     int c, next, getch(void);
@@ -101,7 +102,7 @@ int getword(char *word, int lim)
     {
         *w++ = c;
     }
-    if (c == '/') // handle single-line comments
+    if (c == '/')  /* handle single-line comments */
     {
         next = getch();
         if (next == '/')
@@ -114,26 +115,26 @@ int getword(char *word, int lim)
             *w = '\0';
             return c;
         }
-        if (next == '*') // handle multi-line comments
+        if (next == '*')  /* handle multi-line comments */
         {
             int prev = 0;
             while ((c = getch()) != EOF)
             {
                 if (prev == '*' && c == '/')
                 {
-                    break; // end of comment
+                    break;  /* end of comment */
                 }
                 prev = c;
                 newline = (c == '\n');
             }
         }
     }
-    if (c == '"') // skip string literals
+    if (c == '"')  /* skip string literals */
     {
         next = getch();
         if (next == '\\')
         {
-            getch(); // skip escaped character
+            getch();  /* skip escaped character */
         }
         while (next != '"' && next != EOF)
         {
@@ -143,12 +144,12 @@ int getword(char *word, int lim)
         *w = '\0';
         return next;
     }
-    if (c == '\'') // skip character constants
+    if (c == '\'')  /* skip character constants */
     {
         next = getch();
         if (next == '\\')
         {
-            getch(); // skip escape char
+            getch();  /* skip escape char */
         }
         while (next != '\'' && next != EOF)
         {
@@ -158,7 +159,7 @@ int getword(char *word, int lim)
         *w = '\0';
         return next;
     }
-    if (c == '#' && newline) // skip preprocessor directives
+    if (c == '#' && newline)  /* skip preprocessor directives */
     {
         while (c != '\n' && c != EOF)
         {
@@ -168,7 +169,7 @@ int getword(char *word, int lim)
         *w = '\0';
         return c;
     }
-    if (!isalpha(c) && c != '_') // recognize _ in identifier names
+    if (!isalpha(c) && c != '_')  /* recognize _ in identifier names */
     {
         *w = '\0';
         return c;
@@ -187,13 +188,13 @@ int getword(char *word, int lim)
     return word[0];
 }
     
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)

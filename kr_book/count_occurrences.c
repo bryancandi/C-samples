@@ -1,8 +1,12 @@
-/* Sample 1.6 arrays - count occurrences */
+/*
+ * Sample 1.6
+ * Arrays
+ * Count occurrences
+ */
 
 #include <stdio.h>
 
-// count digits, white space, others in an array
+/* count digits, white space, others in an array */
 
 int main(void)
 {

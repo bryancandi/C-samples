@@ -1,4 +1,5 @@
-/* Sample 6.5
+/*
+ * Sample 6.5
  * Self-referential Structures
  * Word frequency count
  * To-do: Implement exercises 6-3 and 6-4
@@ -9,11 +10,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct tnode {              // the tree node
-    char *word;             // points to the text
-    int count;              // number of occurrences
-    struct tnode *left;     // left child
-    struct tnode *right;    // right child
+struct tnode {            /* the tree node */
+    char *word;           /* points to the text */
+    int count;            /* number of occurrences */
+    struct tnode *left;   /* left child */
+    struct tnode *right;  /* right child */
 };
 
 #define MAXWORD 100
@@ -26,10 +27,10 @@ char *my_strdup(char *);
 void freetree(struct tnode *);
 int getword(char*, int);
 
-char buf[BUFSIZE];  // buffer for ungetch
-int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];  /* buffer for ungetch */
+int bufp = 0;       /* next free position in buf */
 
-// word frequency count
+/* word frequency count */
 int main(void)
 {
     struct tnode *root;
@@ -48,34 +49,34 @@ int main(void)
     return 0;
 }
 
-// addtree: add a node with w, at or below p
+/* addtree: add a node with w, at or below p */
 struct tnode *addtree(struct tnode *p, char *w)
 {
     int cond;
 
-    if (p == NULL) // a new word has arrived
+    if (p == NULL)  /* a new word has arrived */
     {
-        p = talloc(); // make a new node
+        p = talloc();  /* make a new node */
         p->word = my_strdup(w);
         p->count = 1;
         p->left = p->right = NULL;
     }
     else if ((cond = strcmp(w, p->word)) == 0)
     {
-        p->count++; // repeat word
+        p->count++;  /* repeat word */
     }
-    else if (cond < 0) // less than into left subtree
+    else if (cond < 0)  /* less than into left subtree */
     {
         p->left = addtree(p->left, w);
     }
-    else // greater than into right subtree
+    else  /* greater than into right subtree */
     {
         p->right  = addtree(p->right, w);
     }
     return p;
 }
 
-// treeprint: in-order print of tree p
+/* treeprint: in-order print of tree p */
 void treeprint(struct tnode *p)
 {
     if (p != NULL)
@@ -86,18 +87,18 @@ void treeprint(struct tnode *p)
     }
 }
 
-// talloc: make a tnode
+/* talloc: make a tnode */
 struct tnode *talloc(void)
 {
     return (struct tnode *) malloc(sizeof(struct tnode));
 }
 
-// my_strdup: make c duplicate of s (renamed from strdup to avoid string.h confict)
+/* my_strdup: make c duplicate of s (renamed from strdup to avoid string.h confict) */
 char *my_strdup(char *s)
 {
     char *p;
 
-    p = (char *) malloc(strlen(s) + 1); // +1 for '\0'
+    p = (char *) malloc(strlen(s) + 1);  /* +1 for '\0' */
     if (p != NULL)
     {
         strcpy(p, s);
@@ -105,19 +106,19 @@ char *my_strdup(char *s)
     return p;
 }
 
-// freetree: free allocated memory
+/* freetree: free allocated memory */
 void freetree(struct tnode *p)
 {
     if (p != NULL)
     {
         freetree(p->left);
         freetree(p->right);
-        free(p->word); // free the duplicated string
-        free(p); // free the node itself
+        free(p->word);  /* free the duplicated string */
+        free(p);  /* free the node itself */
     }
 }
 
-// getword: get next word or character from input
+/* getword: get next word or character from input */
 int getword(char *word, int lim)
 {
     int c, getch(void);
@@ -147,13 +148,13 @@ int getword(char *word, int lim)
     return word[0];
 }
     
-// getch: get a (possibly pushed back) character
+/* getch: get a (possibly pushed back) character */
 int getch(void)
 {
     return (bufp > 0) ? buf[--bufp] : getchar();
 }
 
-// ungetch: push character back on input
+/* ungetch: push character back on input */
 void ungetch(int c)
 {
     if (bufp >= BUFSIZE)
