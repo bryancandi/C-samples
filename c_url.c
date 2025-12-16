@@ -5,12 +5,13 @@
 
 int main(void)
 {
-    int i = 0;
     char str[] = "hello, world!";
+    int i = 0;
+    int n = strlen(str);
 
 https://www.kernel.org
 
-    while (i < strlen(str))
+    while (i < n)
     {
         putchar(str[i++]);
         goto https;
