@@ -1,12 +1,12 @@
 /*
- * Exercise 8-3 & 8-4
- * Not yet implemented
+ * Exercise 8-2
+ * Rewrite fopen and _fillbuf with fields instead of explicit bit operations
  */
 
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "syscalls.h"
+#include "syscalls_ex.h"
 
 FILE _iob[OPEN_MAX] = {  /* stdin, stdout, stderr: */
     { 0, (char *) 0, (char *) 0, _READ, 0 },
@@ -50,7 +50,7 @@ FILE *fopen(char *name, char *mode)
     }
     for (fp = _iob; fp < _iob + OPEN_MAX; fp++)
     {
-        if ((fp->flag & (_READ | _WRITE)) == 0)
+        if (!fp->read && !fp->write)
         {
             break;  /* found free slot */
         }
@@ -60,7 +60,7 @@ FILE *fopen(char *name, char *mode)
         return NULL;
     }
 
-    if (*mode == 'w')
+    if (*mode == 'w')  /* create file */
     {
         fd = creat(name, PERMS);
     }
@@ -75,14 +75,18 @@ FILE *fopen(char *name, char *mode)
     {
         fd = open(name, O_RDONLY, 0);
     }
-    if (fd == -1)
+    if (fd == -1)  /* couldn't access name */
     {
         return NULL;
     }
     fp->fd = fd;
     fp->cnt = 0;
     fp->base = NULL;
-    fp->flag = (*mode == 'r') ? _READ : _WRITE;
+    fp->read  = (*mode == 'r') ? 1 : 0;
+    fp->write = (*mode != 'r') ? 1 : 0;
+    fp->unbuf = 0;
+    fp->eof = 0;
+    fp->err = 0;
     return fp;
 }
 
@@ -91,15 +95,16 @@ int _fillbuf(FILE *fp)
 {
     int bufsize;
 
-    if ((fp->flag & (_READ | _EOF | _ERR)) != _READ)
+    if (!fp->read || fp->eof || fp->err)
     {
         return EOF;
     }
-    bufsize = (fp->flag & _UNBUF) ? 1 : BUFSIZ;
+    bufsize = fp->unbuf ? 1 : BUFSIZ;
     if (fp->base == NULL)   /* no buffer yet */
     {
         if ((fp->base = (char *) malloc(bufsize)) == NULL)
         {
+            fp->err = 1;
             return EOF;     /* can't get buffer */
         }
     }
@@ -109,11 +114,11 @@ int _fillbuf(FILE *fp)
     {
         if (fp->cnt == -1)
         {
-            fp->flag |= _EOF;
+            fp->eof = 1;
         }
         else
         {
-            fp->flag |= _ERR;
+            fp->err = 1;
         }
         fp->cnt = 0;
         return EOF;
@@ -125,6 +130,6 @@ int _fillbuf(FILE *fp)
 int _flushbuf(int c, FILE *fp)
 {
     if (write(fp->fd, &c, 1) != 1)
-        fp->flag |= _ERR;
+        fp->err = 1;
     return c;
 }

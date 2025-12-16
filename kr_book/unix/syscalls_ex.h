@@ -1,4 +1,4 @@
-/* syscalls.h */
+/* syscalls_ex.h */
 
 #define NULL        0
 #define EOF         (-1)
@@ -9,7 +9,11 @@ typedef struct _iobuf {
     int cnt;            /* characters left */
     char *ptr;          /* next character position */
     char *base;         /* location of buffer */
-    int flag;           /* mode of file access */
+    unsigned read  : 1; /* file open for reading */
+    unsigned write : 1; /* file open for writing */
+    unsigned unbuf : 1; /* file is unbuffered */
+    unsigned eof   : 1; /* EOF has occurred */
+    unsigned err   : 1; /* error has occurred */
     int fd;             /* file descriptor */
 } FILE;
 extern FILE _iob[OPEN_MAX];
