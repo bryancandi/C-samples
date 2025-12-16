@@ -1,4 +1,7 @@
-// Get factorial using recursion
+/*
+ * fact.c
+ * Get factorial using recursion
+ */
 
 #include <ctype.h>
 #include <stdio.h>
@@ -14,7 +17,7 @@ int main(void)
         int scan = scanf("%i", &n);
         if (scan == 0)
         {
-            // Clear the input buffer with getchar() when the user enters invalid input
+            /* Clear the input buffer with getchar() when the user enters invalid input */
             while (getchar() != '\n');
         }
     }
@@ -27,12 +30,12 @@ int main(void)
 
 int fact(int n)
 {
-    // Base case
+    /* Base case */
     if (n == 1)
     {
         return 1;
     }
-    // Recursive case
+    /* Recursive case */
     else
     {
         return n * fact(n - 1);

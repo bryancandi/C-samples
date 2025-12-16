@@ -1,8 +1,11 @@
-/* Custom getline function 
- * renamed to my_getline() to avoid conflict with POSIX getline()
+/*
+ * getline.c
+ * Custom getline function 
+ * Renamed to my_getline() to avoid conflict with POSIX getline()
  */
 
 #include <stdio.h>
+
 #define BUFFER 1000
 
 int my_getline(char s[], int lim);

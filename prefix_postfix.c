@@ -1,6 +1,7 @@
 /*
+ * prefix_postfix.c
  * Demonstration of post-increment/decrement (i++, i--) 
- * versus pre-increment/decrement (++i, --i).
+ * Versus pre-increment/decrement (++i, --i).
  */
 
 #include <stdio.h>
@@ -15,11 +16,11 @@ int main(void)
 
     i = 1;
     printf("i++:  ");
-    print_num(i++); // return current value of 'i', then increment
+    print_num(i++);  /* return current value of 'i', then increment */
 
     i = 1;
     printf("++i:  ");
-    print_num(++i); // increment 'i', then return the new value
+    print_num(++i);  /* increment 'i', then return the new value */
 
     return 0;
 }

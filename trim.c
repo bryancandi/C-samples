@@ -1,3 +1,5 @@
+/* trim.c */
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +20,7 @@ int main(void)
     }
     else
     {
-        line[strcspn(line, "\n")] = 0; // remove trailing newline from fgets
+        line[strcspn(line, "\n")] = 0;  /* remove trailing newline from fgets */
     }
 
     char *line_t = malloc(strlen(line) + 1);

@@ -1,3 +1,5 @@
+/* space_to_underscore.c */
+
 #include <stdio.h>
 #include <string.h>
 
@@ -13,7 +15,7 @@ int main(void)
     }
     else
     {
-        line[strcspn(line, "\n")] = 0; // replace '\n' with '\0'
+        line[strcspn(line, "\n")] = 0;  /* replace '\n' with '\0' */
     }
 
     for (int i = 0; line[i] != '\0'; ++i)

@@ -1,4 +1,7 @@
-/* swap.c - swaps two integers using pointers */
+/*
+ * swap.c
+ * swaps two integers using pointers
+ */
 
 #include <stdio.h>
 
@@ -10,13 +13,13 @@ int main(void)
     int y = 2;
 
     printf("x is %i, y is %i\n", x, y);
-    swap(&x, &y); // pass the address of x and y to the swap function
+    swap(&x, &y);  /* pass the address of x and y to the swap function */
     printf("x is %i, y is %i\n", x, y);
 
     return 0;
 }
 
-// dereference with *
+/* dereference with * */
 void swap(int *a, int *b)
 {
     int tmp = *a;

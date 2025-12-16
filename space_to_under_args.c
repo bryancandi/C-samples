@@ -1,3 +1,5 @@
+/* space_to_under_args.c */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,12 +22,12 @@ int main(int argc, char *argv[])
         total_length += strlen(argv[i]);
         if (i < argc - 1)
         {
-            total_length += 1; // for space if more args
+            total_length += 1;  /* for space if more args */
         }
     }
-    total_length += 1; // for null terminator
+    total_length += 1;  /* for null terminator */
 
-    // alloc memory for the combined string
+    /* alloc memory for the combined string */
     char *combined_string = malloc(total_length);
     if (combined_string == NULL)
     {
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // alloc memory for output string
+    /* alloc memory for output string */
     char *modified_string = malloc(total_length);
     if (modified_string == NULL)
     {
