@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "syscalls_ex.h"
+#include "fopen.h"
 
 FILE _iob[OPEN_MAX] = {  /* stdin, stdout, stderr: */
     { 0, (char *) 0, (char *) 0, _READ, 0 },

@@ -1,4 +1,4 @@
-/* syscalls_ex.h */
+/* fopen.h */
 
 #define NULL        0
 #define EOF         (-1)
