@@ -1,5 +1,8 @@
 /* syscalls.h */
 
+#ifndef SYSCALLS_H
+#define SYSCALLS_H
+
 #define NULL        0
 #define EOF         (-1)
 #define BUFSIZ      1024
@@ -40,3 +43,5 @@ int _flushbuf(int, FILE *);
 
 #define getchar()   getc(stdin)
 #define putchar(x)  putc((x), stdout)
+
+#endif  /* SYSCALLS_H */
