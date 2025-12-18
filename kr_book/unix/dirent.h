@@ -1,4 +1,8 @@
-/* dirent.h */
+/*
+ * dirent.h
+ * K&R version of dirent.h
+ * For use with obsolete version: dirstat_old.c
+ */
 
 #ifndef DIRENT_H
 #define DIRENT_H
