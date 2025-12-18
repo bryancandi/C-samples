@@ -1,6 +1,7 @@
 /*
- * Sample 8.6
+ * Exercise 8-5
  * Listing Directories
+ * Print inode info
  * Standard POSIX-compliant version
  */
 
@@ -8,6 +9,7 @@
 
 #include <dirent.h>     /* standard POSIX dirent.h */
 #include <limits.h>
+#include <pwd.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -46,10 +48,18 @@ void fsize(char *name)
     {
         dirwalk(name, fsize);
     }
-    printf("%8ld %s\n", stbuf.st_size, name);
+
+    struct passwd *pw = getpwuid(stbuf.st_uid);
+
+    printf("%5lu ", stbuf.st_ino);            /* inode number */
+    printf("%6o ", stbuf.st_mode);            /* file mode in octal */
+    printf("%3lu ", stbuf.st_nlink);          /* number of links */
+    printf("%8ld ", stbuf.st_size);           /* file size */
+    printf("%-8s ", pw ? pw->pw_name : "?");  /* owner */
+    printf("%s\n", name);                     /* file name */
 }
 
-/* dirwalk: apply fcn to all files in dir */
+/* dirwalk: recursively apply fcn to all files in dir */
 void dirwalk(char *dir, void (*fcn)(char *))
 {
     char name[PATH_MAX];
