@@ -73,7 +73,7 @@ int
 main(int argc, char *argv[])
 {
 	char tty[PATH_MAX], *mytty, *cp;
-	I'llint msgsok, myttyfd;
+	int msgsok, myttyfd;
 	time_t atime;
 	uid_t myuid;
 
