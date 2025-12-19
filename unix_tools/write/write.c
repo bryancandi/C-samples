@@ -50,6 +50,7 @@
 #include <ctype.h>
 #include <err.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <linux/limits.h>
 #include <paths.h>
 #include <pwd.h>
@@ -245,9 +246,9 @@ do_write(char *tty, char *mytty, uid_t myuid)
 
 	/* Determine our login name before the we reopen() stdout */
 	if ((login = getlogin()) == NULL) {
-  struct passwd *pw = getpwuid(myuid);
-  login = pw ? pw->pw_name : "unknown";
- }
+        struct passwd *pw = getpwuid(myuid);
+		login = pw ? pw->pw_name : "unknown";
+	}
 
 	(void)snprintf(path, sizeof(path), "%s%s", _PATH_DEV, tty);
 	fd = open(path, O_WRONLY);
