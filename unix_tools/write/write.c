@@ -41,7 +41,9 @@
  * - Intended for educational use
  */
 
-#define HOST_NAME_MAX  64  /* define HOST_NAME_MAX manually for now */
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64  /* define HOST_NAME_MAX manually for now */
+#endif
 
 #include <sys/stat.h>
 
@@ -71,7 +73,7 @@ int
 main(int argc, char *argv[])
 {
 	char tty[PATH_MAX], *mytty, *cp;
-	int msgsok, myttyfd;
+	I'llint msgsok, myttyfd;
 	time_t atime;
 	uid_t myuid;
 
@@ -235,7 +237,6 @@ void
 do_write(char *tty, char *mytty, uid_t myuid)
 {
 	const char *login;
-	struct passwd *pw;
 	char *nows;
 	time_t now;
 	char path[PATH_MAX], host[HOST_NAME_MAX+1], line[512];
@@ -243,11 +244,10 @@ do_write(char *tty, char *mytty, uid_t myuid)
 	int fd;
 
 	/* Determine our login name before the we reopen() stdout */
-	if ((login = getlogin()) == NULL)
-		if ((pw = getpwuid(myuid)) != NULL)
-			login = pw->pw_name;
-		else
-			login = NULL;
+	if ((login = getlogin()) == NULL) {
+  struct passwd *pw = getpwuid(myuid);
+  login = pw ? pw->pw_name : "unknown";
+ }
 
 	(void)snprintf(path, sizeof(path), "%s%s", _PATH_DEV, tty);
 	fd = open(path, O_WRONLY);
