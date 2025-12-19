@@ -41,12 +41,14 @@
  * - Intended for educational use
  */
 
+#define HOST_NAME_MAX  64  /* define HOST_NAME_MAX manually for now */
+
 #include <sys/stat.h>
 
 #include <ctype.h>
 #include <err.h>
 #include <fcntl.h>
-#include <limits.h>
+#include <linux/limits.h>
 #include <paths.h>
 #include <pwd.h>
 #include <signal.h>
@@ -233,6 +235,7 @@ void
 do_write(char *tty, char *mytty, uid_t myuid)
 {
 	const char *login;
+	struct passwd *pw;
 	char *nows;
 	time_t now;
 	char path[PATH_MAX], host[HOST_NAME_MAX+1], line[512];
@@ -241,7 +244,10 @@ do_write(char *tty, char *mytty, uid_t myuid)
 
 	/* Determine our login name before the we reopen() stdout */
 	if ((login = getlogin()) == NULL)
-		login = user_from_uid(myuid, 0);
+		if ((pw = getpwuid(myuid)) != NULL)
+			login = pw->pw_name;
+		else
+			login = NULL;
 
 	(void)snprintf(path, sizeof(path), "%s%s", _PATH_DEV, tty);
 	fd = open(path, O_WRONLY);
