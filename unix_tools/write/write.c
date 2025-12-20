@@ -41,7 +41,7 @@
  * - Intended for educational use
  */
 
-#define _GNU_SOURCE
+#define _GNU_SOURCE  /* enable GNU extensions (e.g., setresgid) */
 
 #ifndef HOST_NAME_MAX
 #define HOST_NAME_MAX 64  /* define HOST_NAME_MAX manually for now */
@@ -93,11 +93,10 @@ main(int argc, char *argv[])
 	if (!(mytty = ttyname(myttyfd)))
 		errx(1, "can't find your tty's name");
 	if ((cp = strrchr(mytty, '/'))) {
-#ifdef __linux__
-    	/* Preserve /dev/pts/N on Linux */
-    	if (strncmp(mytty, _PATH_DEV "pts/", sizeof(_PATH_DEV "pts/") - 1) != 0)
+#ifdef __linux__  /* Preserve /dev/pts/N on Linux */
+		if (strncmp(mytty, _PATH_DEV "pts/", sizeof(_PATH_DEV "pts/") - 1) != 0)
 #endif
-        	mytty = cp + 1;
+			mytty = cp + 1;
 	}
 	if (term_chk(mytty, &msgsok, &atime, 1))
 		exit(1);
@@ -115,10 +114,10 @@ main(int argc, char *argv[])
 	case 3:
 		if (!strncmp(argv[2], _PATH_DEV, sizeof(_PATH_DEV) - 1))
 			argv[2] += sizeof(_PATH_DEV) - 1;
-#ifndef __linux__
+#ifndef __linux__  /* skip utmp check on Linux for now */
 		if (utmp_chk(argv[1], argv[2]))
 			errx(1, "%s is not logged in on %s",
-			    argv[1], argv[2]);
+				argv[1], argv[2]);
 #endif
 		if (term_chk(argv[2], &msgsok, &atime, 1))
 			exit(1);
