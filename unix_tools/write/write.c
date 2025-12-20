@@ -93,10 +93,10 @@ main(int argc, char *argv[])
 	if (!(mytty = ttyname(myttyfd)))
 		errx(1, "can't find your tty's name");
 	if ((cp = strrchr(mytty, '/'))) {
-	#ifdef __linux__
+#ifdef __linux__
 		/* Preserve /dev/pts/N on Linux */
 		if (strncmp(mytty, _PATH_DEV "pts/", sizeof(_PATH_DEV "pts/") - 1) != 0)
-	#endif
+#endif
 			mytty = cp + 1;
 	}
 	if (term_chk(mytty, &msgsok, &atime, 1))
@@ -114,10 +114,10 @@ main(int argc, char *argv[])
 		break;
 	case 3:
 		if (!strncmp(argv[2], _PATH_DEV, sizeof(_PATH_DEV) - 1)) {
-		#ifdef __linux__
+#ifdef __linux__
 			/* Preserve pts paths on Linux */
 			if (strncmp(argv[2] + sizeof(_PATH_DEV) - 1, "pts/", 4) != 0)
-		#endif
+#endif
 				argv[2] += sizeof(_PATH_DEV) - 1;
 		}
 		if (utmp_chk(argv[1], argv[2]))
@@ -288,10 +288,10 @@ do_write(char *tty, char *mytty, uid_t myuid)
 	 * Unfortunately this is rather late - well after utmp
 	 * parsing, then pinned by the tty open and setresgid
 	 */
-	#ifdef __OpenBSD__
+#ifdef __OpenBSD__
 	if (pledge("stdio", NULL) == -1)
 		err(1, "pledge");
-	#endif
+#endif
 
 	(void)signal(SIGINT, done);
 	(void)signal(SIGHUP, done);
