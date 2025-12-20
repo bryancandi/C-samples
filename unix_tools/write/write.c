@@ -258,7 +258,7 @@ do_write(char *tty, char *mytty, uid_t myuid)
 
 	/* Determine our login name before the we reopen() stdout */
 	if ((login = getlogin()) == NULL) {
-		struct passwd *pw = getpwuid(myuid);
+		struct passwd *pw = getpwuid(myuid);  /* fallback for getlogin() on Linux */
 		login = pw ? pw->pw_name : "unknown";
 	}
 
