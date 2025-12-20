@@ -94,10 +94,10 @@ main(int argc, char *argv[])
 		errx(1, "can't find your tty's name");
 	if ((cp = strrchr(mytty, '/'))) {
 #ifdef __linux__
-		/* Preserve /dev/pts/N on Linux */
-		if (strncmp(mytty, _PATH_DEV "pts/", sizeof(_PATH_DEV "pts/") - 1) != 0)
+    	/* Preserve /dev/pts/N on Linux */
+    	if (strncmp(mytty, _PATH_DEV "pts/", sizeof(_PATH_DEV "pts/") - 1) != 0)
 #endif
-			mytty = cp + 1;
+        	mytty = cp + 1;
 	}
 	if (term_chk(mytty, &msgsok, &atime, 1))
 		exit(1);
@@ -113,16 +113,13 @@ main(int argc, char *argv[])
 		do_write(tty, mytty, myuid);
 		break;
 	case 3:
-		if (!strncmp(argv[2], _PATH_DEV, sizeof(_PATH_DEV) - 1)) {
-#ifdef __linux__
-			/* Preserve pts paths on Linux */
-			if (strncmp(argv[2] + sizeof(_PATH_DEV) - 1, "pts/", 4) != 0)
-#endif
-				argv[2] += sizeof(_PATH_DEV) - 1;
-		}
+		if (!strncmp(argv[2], _PATH_DEV, sizeof(_PATH_DEV) - 1))
+			argv[2] += sizeof(_PATH_DEV) - 1;
+#ifndef __linux__
 		if (utmp_chk(argv[1], argv[2]))
 			errx(1, "%s is not logged in on %s",
 			    argv[1], argv[2]);
+#endif
 		if (term_chk(argv[2], &msgsok, &atime, 1))
 			exit(1);
 		if (myuid && !msgsok)
