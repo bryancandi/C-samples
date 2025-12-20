@@ -41,6 +41,8 @@
  * - Intended for educational use
  */
 
+#define _GNU_SOURCE
+
 #ifndef HOST_NAME_MAX
 #define HOST_NAME_MAX 64  /* define HOST_NAME_MAX manually for now */
 #endif
@@ -58,6 +60,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <syscall.h>
 #include <time.h>
 #include <unistd.h>
 #include <utmp.h>
@@ -246,7 +249,7 @@ do_write(char *tty, char *mytty, uid_t myuid)
 
 	/* Determine our login name before the we reopen() stdout */
 	if ((login = getlogin()) == NULL) {
-        struct passwd *pw = getpwuid(myuid);
+		struct passwd *pw = getpwuid(myuid);
 		login = pw ? pw->pw_name : "unknown";
 	}
 
@@ -269,8 +272,10 @@ do_write(char *tty, char *mytty, uid_t myuid)
 	 * Unfortunately this is rather late - well after utmp
 	 * parsing, then pinned by the tty open and setresgid
 	 */
+	#ifdef __OpenBSD__
 	if (pledge("stdio", NULL) == -1)
 		err(1, "pledge");
+	#endif
 
 	(void)signal(SIGINT, done);
 	(void)signal(SIGHUP, done);
