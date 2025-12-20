@@ -12,8 +12,11 @@ Originally based on:
 
 ## Notes
 
-- Some Linux distributions no longer ship `write(1)`
-- This is a Linux-portable version for educational purposes
+- Some Linux distributions no longer ship `write(1)`.
+- This is a Linux-portable version for educational purposes.
+- On Linux, receiving messages requires the terminal to be group-writable.
+    - You can run `chmod g+w $(tty)` in the terminal to allow receiving messages.
+    - Sending messages still works, but may warn if write permissions are off.
 
 ## Files
 
