@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     if (argc != 2) {
-        printf("Usage: ./binary <binary>\n");
+        printf("Usage: %s <binary>\n", argv[0]);
         return 1;
     }
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         printf("ASCII: non-printable control character\n");
     }
     else {
-        printf("ASCII: (out of range)\n");
+        printf("ASCII: value out of range\n");
     }
 
     return 0;
