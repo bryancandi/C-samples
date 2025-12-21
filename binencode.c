@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
         printf("Usage: %s <string> [string ...]\n", argv[0]);
         return 1;
     }
+
     while (--argc > 0) {
         char *p = *++argv;
 
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+/* itob: recursively print the bits of an integer using bitwise operations */
 void itob(unsigned int n, int bits)
 {
     unsigned int bit;
