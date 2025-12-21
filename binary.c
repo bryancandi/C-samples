@@ -1,5 +1,9 @@
 /*
- * binary.c 
+ * binary.c
+ * Convert binary values to decimal and ASCII (when printable)
+ * Usage: ./bindecode <binary>
+ * Author: Bryan C.
+ * Date: December 20, 2025
  */
 
 #include <stdio.h>
