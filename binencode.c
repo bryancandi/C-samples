@@ -7,7 +7,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #define BITS  8   /* binary bit width */
 #define SPACE 32  /* ASCII value for space character */
