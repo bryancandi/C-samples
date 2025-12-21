@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         char *p = *++argv;
 
         while (*p != '\0') {
-            unsigned char c =  (unsigned char)*p++;
+            unsigned char c = (unsigned char) *p++;
             itob(c, BITS);
             putchar(' ');
         }
