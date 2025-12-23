@@ -13,21 +13,11 @@
 #include <windows.h>
 #endif
 
-void sleep_ms(unsigned int ms)
-{
-#ifdef _WIN32
-    Sleep(ms);
-#else
-    struct timespec ts;
-    ts.tv_sec = ms / 1000;
-    ts.tv_nsec = (ms % 1000) * 1000000L;
-    nanosleep(&ts, NULL);
-#endif 
-}
-
 #define CHAR1 "\u2571"
 #define CHAR2 "\u2572"
 #define DELAY 5
+
+void sleep_ms(unsigned int ms);
 
 int main(void)
 {
@@ -38,8 +28,20 @@ int main(void)
     srand((unsigned)time(NULL));
 
     for (;;) {
-        sleep_ms(DELAY);
         printf("%s", (rand() % 2) ? CHAR1 : CHAR2);
         fflush(stdout);
+        sleep_ms(DELAY);
     }
+}
+
+void sleep_ms(unsigned int ms)
+{
+#ifdef _WIN32  /* Windows: Sleep takes milliseconds */
+    Sleep(ms);
+#else          /* POSIX: nanosleep takes seconds + nanoseconds */
+    struct timespec ts;
+    ts.tv_sec = ms / 1000;
+    ts.tv_nsec = (ms % 1000) * 1000000L;
+    nanosleep(&ts, NULL);
+#endif 
 }
