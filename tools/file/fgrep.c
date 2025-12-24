@@ -1,9 +1,6 @@
 /*
- * fgrep.c
- *
- * A simple fixed-string search program, inspired by Unix `fgrep`
- * Matching substrings are highlighted in red using ANSI escape codes
- * To-do: handle files as args
+ * grep.c
+ * to-do: handle files as args
  */
 
 #include <stdio.h>
