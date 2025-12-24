@@ -2,17 +2,21 @@
  * fgrep.c
  * A simple fixed-string search program, inspired by Unix `fgrep`
  * Matching substrings are highlighted in red using ANSI escape codes
- * To-do: handle files as args
+ * Usage: ./fgrep PATTERN [FILE]...
+ * Author: Bryan C.
+ * Date: December 23, 2025
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void patterncmp(char *, FILE *, char *prog);
+void patterncmp(FILE *, char *);
 
 int main(int argc, char *argv[])
 {
+    FILE *fp;
+    int file = 1;
     char *prog = argv[0];
     char buf[BUFSIZ];
 
@@ -21,15 +25,26 @@ int main(int argc, char *argv[])
         exit(1);
     }
     if (argc == 2) {
-        patterncmp(argv[1], stdin, prog);
+        patterncmp(stdin, argv[1]);
     }
-
-    /* To-do: handle files as args */
-
+    else {
+        while (--argc > 1) {
+            if ((fp = fopen(argv[++file], "r")) == NULL) {
+                fprintf(stderr, "%s: can't open %s\n", prog, argv[file]);
+                exit(2);
+            }
+            else {
+                printf("\033[36mfile: %s\033[0m\n", argv[file]);
+                patterncmp(fp, argv[1]);
+                fclose(fp);
+            }
+        }
+    }
     return 0;
 }
 
-void patterncmp(char *pattern, FILE *ifp, char *prog)
+/* patterncmp: compare file ifp with string pattern; print lines containing match w/ pattern in red */
+void patterncmp(FILE *ifp, char *pattern)
 {
     int c;
     int n = 0;
