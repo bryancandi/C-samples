@@ -1,6 +1,5 @@
 /*
  * binary.c
- *
  * Convert binary values to decimal and ASCII (when printable)
  * Usage: ./bindecode <binary>
  * Author: Bryan C.
@@ -12,8 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
+    if (argc != 2) {
         printf("Usage: %s <binary>\n", argv[0]);
         return 1;
     }
@@ -21,24 +19,20 @@ int main(int argc, char *argv[])
     char *end;
     long value = strtol(argv[1], &end, 2);
 
-    if (*end != '\0')
-    {
+    if (*end != '\0') {
         fprintf(stderr, "Invalid binary number\n");
         return 1;
     }
 
     printf("Decimal: %ld\n", value);
 
-    if (value >= 32 && value <= 126)
-    {
+    if (value >= 32 && value <= 126) {
         printf("ASCII: %c\n", (unsigned char)value);
     }
-    else if (value >= 0 && value <= 31)
-    {
+    else if (value >= 0 && value <= 31) {
         printf("ASCII: non-printable control character\n");
     }
-    else
-    {
+    else {
         printf("ASCII: value out of range\n");
     }
 

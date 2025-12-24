@@ -1,6 +1,5 @@
 /*
  * binencode.c
- *
  * Convert input string ASCII character values to 8-bit binary
  * Usage: ./binencode <string>
  * Author: Bryan C.
@@ -16,25 +15,21 @@ void itob(unsigned int n, int bits);
 
 int main(int argc, char *argv[])
 {
-    if (argc == 1)
-    {
+    if (argc == 1) {
         printf("Usage: %s <string> [string ...]\n", argv[0]);
         return 1;
     }
 
-    while (--argc > 0)
-    {
+    while (--argc > 0) {
         char *p = *++argv;
 
-        while (*p != '\0')
-        {
+        while (*p != '\0') {
             unsigned char c = (unsigned char) *p++;
             itob(c, BITS);
             putchar(' ');
         }
 
-        if (argc > 1)
-        {
+        if (argc > 1) {
             itob(SPACE, BITS);
             putchar(' ');
         }
@@ -49,8 +44,7 @@ void itob(unsigned int n, int bits)
 {
     unsigned int bit;
 
-    if (bits == 0)
-    {
+    if (bits == 0) {
         return;
     }
 
