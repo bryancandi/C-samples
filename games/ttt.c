@@ -112,6 +112,7 @@ int main(void)
             int empty_col = -1;
 
             /*
+             * Block possible win by player.
              * Examine one winning pattern at a time:
              * count Xs, count empty squares,
              * record the empty position for a possible blocking move.
@@ -151,13 +152,38 @@ int main(void)
                 }
             }
 
-            /* computer take center if free */
+            /*
+             * Computer move priorities (if no block):
+             * 1. Take center if free
+             * 2. Take available corners in this order: TL, TR, BL, BR
+             * 3. Take the next empty square
+             */
             if (!done && board[1][1] != 'X' && board[1][1] != 'O')
             {
-                board[1][1] = 'O';
+                board[1][1] = 'O';  /* center */
                 done = 1;
             }
-            else  /* take next empty space */
+            else if(!done && board[0][0] != 'X' && board[0][0] != 'O')
+            {
+                board[0][0] = 'O';  /* TL */
+                done = 1;
+            }
+            else if(!done && board[0][2] != 'X' && board[0][2] != 'O')
+            {
+                board[0][2] = 'O';  /* TR */
+                done = 1;
+            }
+            else if(!done && board[2][0] != 'X' && board[2][0] != 'O')
+            {
+                board[2][0] = 'O';  /* BL */
+                done = 1;
+            }
+            else if(!done && board[2][2] != 'X' && board[2][2] != 'O')
+            {
+                board[2][2] = 'O';  /* BR */
+                done = 1;
+            }
+            else  /* take first available empty space */
             {
                 for (int i = 0; i < SIZE && !done; i++)
                 {
