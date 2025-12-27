@@ -2,7 +2,10 @@
  * ttt.c
  *
  * Terminal-based Tic-Tac-Toe game.
- * Uses priority-driven, pattern-based win detection.
+ * Computer opponent selects moves using a simple priority system:
+ *   1. Complete a winning line if possible.
+ *   2. Block the player from winning.
+ *   3. Take remaining spaces based on the player's moves.
  *
  * Author: Bryan C.
  * Date: December 26, 2025
@@ -81,11 +84,11 @@ void game_loop(char board[SIZE][SIZE])
     int n;
     int row, col;
     int moves = 0;
-    char turn = PLAYER_X;
+    char turn = PLAYER_X;  /* X goes first */
 
     while (moves < BOARD_SIZE)
     {
-        if (turn == PLAYER_X)  /* player turn */
+        if (turn == PLAYER_X)  /* player turn (X) */
         {
             do
             {
@@ -127,13 +130,13 @@ void game_loop(char board[SIZE][SIZE])
                 turn = PLAYER_O;
             }
         }
-        if (turn == PLAYER_O)  /* computer turn */
+        if (turn == PLAYER_O)  /* computer turn (O) */
         {
             int b = 0;         /* count blanks */
             int o = 0;         /* count Os */
             int x = 0;         /* count Xs */
-            int fork = 0;      /* player occupies opposite corners (1) */
-            int complete = 0;  /* computer move complete (1) */
+            int fork = 0;      /* player occupies opposite corners (value: 1) */
+            int complete = 0;  /* computer move complete (value: 1) */
             int empty_row = -1;
             int empty_col = -1;
 
@@ -143,8 +146,8 @@ void game_loop(char board[SIZE][SIZE])
              * - Count Xs, Os, and empty squares in the pattern.
              * - Record the empty position for a possible winning or blocking move.
              *
-             * lines[i]     : one complete winning pattern (row, column, or diagonal)
-             * lines[i][j]  : one board position within that pattern
+             * lines[i]     : one complete winning pattern (row, column, or diagonal).
+             * lines[i][j]  : one board position within that pattern.
              *
              * Outer loop iterates lines[i] through all 8 winning patterns.
              * Inner loop iterates lines[i][j] through the 3 positions of current pattern.
@@ -189,10 +192,10 @@ void game_loop(char board[SIZE][SIZE])
 
             /*
              * Computer move priorities (if no block or win is possible):
-             * 1. Take center space if free
-             * 2. If the player occupies two opposite corners (fork) take edge spaces
-             * 3. Otherwise, take available corners in this order: TL, BR, TR, BL
-             * 4. Take the next available empty space
+             * 1. Take center space if free.
+             * 2. If the player occupies two opposite corners (fork) take edge spaces.
+             * 3. Otherwise, take available corners in this order: TL, BR, TR, BL.
+             * 4. Take the next available empty space.
              */
             if ((board[0][0] == PLAYER_X && board[2][2] == PLAYER_X) ||
                 (board[0][2] == PLAYER_X && board[2][0] == PLAYER_X))
@@ -275,7 +278,6 @@ void game_loop(char board[SIZE][SIZE])
             turn = PLAYER_X;
         }
     }
-
 }
 
 /* check_winner: check for a win */
