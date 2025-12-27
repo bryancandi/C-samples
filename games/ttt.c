@@ -106,28 +106,28 @@ int main(void)
         if (turn == 'O')  /* computer turn */
         {
             int x = 0;  /* Xs */
+            int o = 0;  /* Os */
             int b = 0;  /* blanks */
             int done = 0;
             int empty_row = -1;
             int empty_col = -1;
 
             /*
-             * Block possible win by player.
-             * Examine one winning pattern at a time:
-             * count Xs, count empty squares,
-             * record the empty position for a possible blocking move.
+             * Block or complete a potential win:
+             * - Examine each winning pattern (row, column, or diagonal).
+             * - Count Xs, Os, and empty squares in the pattern.
+             * - Record the empty position for a possible blocking or winning move.
              *
              * lines[i]     : one complete winning pattern (row, column, or diagonal)
              * lines[i][j]  : one board position within that pattern
              *
-             * The outer loop increments lines[i] through all 8 possible win conditions.
-             * The inner loop increments lines[i][j] through the 3 board positions
-             * that must match for a win.
+             * Outer loop iterates lines[i] through all 8 winning patterns.
+             * Inner loop iterates lines[i][j] through the 3 positions of current pattern.
              */
             printf("\nComputer move:\n");
             for (int i = 0; i < PATTERNS; i++)
             {
-                x = b = 0;
+                x = o = b = 0;
                 empty_row = empty_col = -1;
                 for (int j = 0; j < SIZE; j++)
                 {
@@ -137,7 +137,11 @@ int main(void)
                     {
                         x++;
                     }
-                    else if (board[r][c] != 'O')
+                    else if (board[r][c] == 'O')
+                    {
+                        o++;
+                    }
+                    else
                     {
                         b++;
                         empty_row = r;
@@ -145,6 +149,12 @@ int main(void)
                     }
                 }
                 if (x == 2 && b == 1)
+                {
+                    board[empty_row][empty_col] = 'O';
+                    done = 1;
+                    break;
+                }
+                else if (o == 2 && b == 1)
                 {
                     board[empty_row][empty_col] = 'O';
                     done = 1;
@@ -163,22 +173,22 @@ int main(void)
                 board[1][1] = 'O';  /* center */
                 done = 1;
             }
-            else if(!done && board[0][0] != 'X' && board[0][0] != 'O')
+            else if (!done && board[0][0] != 'X' && board[0][0] != 'O')
             {
                 board[0][0] = 'O';  /* TL */
                 done = 1;
             }
-            else if(!done && board[0][2] != 'X' && board[0][2] != 'O')
+            else if (!done && board[0][2] != 'X' && board[0][2] != 'O')
             {
                 board[0][2] = 'O';  /* TR */
                 done = 1;
             }
-            else if(!done && board[2][0] != 'X' && board[2][0] != 'O')
+            else if (!done && board[2][0] != 'X' && board[2][0] != 'O')
             {
                 board[2][0] = 'O';  /* BL */
                 done = 1;
             }
-            else if(!done && board[2][2] != 'X' && board[2][2] != 'O')
+            else if (!done && board[2][2] != 'X' && board[2][2] != 'O')
             {
                 board[2][2] = 'O';  /* BR */
                 done = 1;
@@ -229,6 +239,7 @@ void draw_board(char board[SIZE][SIZE])
         for (int j = 0; j < SIZE; j++)
         {
             putchar(board[i][j]);
+            putchar(' ');
         }
         putchar('\n');
     }
