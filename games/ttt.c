@@ -62,7 +62,7 @@ int main(void)
             do
             {
                 printf("\nPlayer move: ");
-                if (scanf("%d", &n) != 1 || n < 1)
+                if (scanf("%d", &n) != 1 || n < 1 || n > 9)
                 {
                     while (getchar() != '\n')
                         ;
