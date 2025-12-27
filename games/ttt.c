@@ -1,18 +1,22 @@
 /*
  * ttt.c
  *
- * Tic-Tac-Toe
+ * Terminal-based Tic-Tac-Toe game.
+ * Uses priority-driven, pattern-based win detection.
+ *
  * Author: Bryan C.
  * Date: December 26, 2025
  */
 
-#include <ctype.h>
 #include <stdio.h>
 
 #define SIZE        3
 #define PATTERNS    8
 #define BOARD_SIZE  9
-#define NO_WINNER   0
+#define MIN_MOVE    1
+#define PLAYER_X   'X'
+#define PLAYER_O   'O'
+#define EMPTY       0
 
 typedef struct {
     int row;
@@ -32,15 +36,12 @@ Coord lines[PATTERNS][SIZE] = {
 };
 
 void draw_board(char[SIZE][SIZE]);
+void game_loop(char[SIZE][SIZE]);
 int check_winner(char[SIZE][SIZE]);
 
 int main(void)
 {
     int c = 1;
-    int n;
-    int row, col;
-    int moves = 0;
-    char turn = 'X';         /* starting player X */
     char board[SIZE][SIZE];  /* 3x3 tic-tac-toe board */
     
     printf("Tic-tac-toe\n\n");
@@ -53,181 +54,10 @@ int main(void)
             board[i][j] = c++ + '0';
         }
     }
+
     draw_board(board);
+    game_loop(board);
 
-    while (moves < BOARD_SIZE)
-    {
-        if (turn == 'X')  /* player turn */
-        {
-            do
-            {
-                printf("\nPlayer move: ");
-                if (scanf("%d", &n) != 1 || n < 1 || n > 9)
-                {
-                    while (getchar() != '\n')
-                        ;
-                    n = 0;
-                }
-            } 
-            while (n <= 0);
-
-            /*
-             * Calculate position on board based on number entered:
-             * row will always be 0 - 2 due to integer division (0-8 / 3)
-             * col will be determined by remainder of integer division
-             */
-            row = (n - 1) / SIZE;
-            col = (n - 1) % SIZE;
-
-            if (board[row][col] != 'X' && board[row][col] != 'O')
-            {
-                board[row][col] = 'X';
-                moves++;
-                draw_board(board);
-
-                if (moves == BOARD_SIZE)
-                {
-                    printf("\nDraw!\n");
-                    break;
-                }
-                if (check_winner(board) == 'X')
-                {
-                    printf("\nX wins!\n");
-                    break;
-                }
-                else if (check_winner(board) == 'O')
-                {
-                    printf("\nO Wins!\n");
-                    break;
-                }
-                turn = 'O';
-            }
-        }
-        if (turn == 'O')  /* computer turn */
-        {
-            int x = 0;  /* Xs */
-            int o = 0;  /* Os */
-            int b = 0;  /* blanks */
-            int done = 0;
-            int empty_row = -1;
-            int empty_col = -1;
-
-            /*
-             * Block or complete a potential win:
-             * - Examine each winning pattern (row, column, or diagonal).
-             * - Count Xs, Os, and empty squares in the pattern.
-             * - Record the empty position for a possible blocking or winning move.
-             *
-             * lines[i]     : one complete winning pattern (row, column, or diagonal)
-             * lines[i][j]  : one board position within that pattern
-             *
-             * Outer loop iterates lines[i] through all 8 winning patterns.
-             * Inner loop iterates lines[i][j] through the 3 positions of current pattern.
-             */
-            printf("\nComputer move:\n");
-            for (int i = 0; i < PATTERNS; i++)
-            {
-                x = o = b = 0;
-                empty_row = empty_col = -1;
-                for (int j = 0; j < SIZE; j++)
-                {
-                    int r = lines[i][j].row;
-                    int c = lines[i][j].col;
-                    if (board[r][c] == 'X')
-                    {
-                        x++;
-                    }
-                    else if (board[r][c] == 'O')
-                    {
-                        o++;
-                    }
-                    else
-                    {
-                        b++;
-                        empty_row = r;
-                        empty_col = c;
-                    }
-                }
-                if (x == 2 && b == 1)
-                {
-                    board[empty_row][empty_col] = 'O';
-                    done = 1;
-                    break;
-                }
-                else if (o == 2 && b == 1)
-                {
-                    board[empty_row][empty_col] = 'O';
-                    done = 1;
-                    break;
-                }
-            }
-
-            /*
-             * Computer move priorities (if no block):
-             * 1. Take center if free
-             * 2. Take available corners in this order: TL, TR, BL, BR
-             * 3. Take the next empty square
-             */
-            if (!done && board[1][1] != 'X' && board[1][1] != 'O')
-            {
-                board[1][1] = 'O';  /* center */
-                done = 1;
-            }
-            else if (!done && board[0][0] != 'X' && board[0][0] != 'O')
-            {
-                board[0][0] = 'O';  /* TL */
-                done = 1;
-            }
-            else if (!done && board[0][2] != 'X' && board[0][2] != 'O')
-            {
-                board[0][2] = 'O';  /* TR */
-                done = 1;
-            }
-            else if (!done && board[2][0] != 'X' && board[2][0] != 'O')
-            {
-                board[2][0] = 'O';  /* BL */
-                done = 1;
-            }
-            else if (!done && board[2][2] != 'X' && board[2][2] != 'O')
-            {
-                board[2][2] = 'O';  /* BR */
-                done = 1;
-            }
-            else  /* take first available empty space */
-            {
-                for (int i = 0; i < SIZE && !done; i++)
-                {
-                    for (int j = 0; j < SIZE && !done; j++)
-                    {
-                        if (board[i][j] != 'X' && board[i][j] != 'O')
-                        {
-                            board[i][j] = 'O';
-                            done = 1;
-                        }
-                    }
-                }
-            }
-            moves++;
-            draw_board(board);
-
-            if (moves == BOARD_SIZE)
-            {
-                printf("\nDraw!\n");
-                break;
-            }
-            if (check_winner(board) == 'X')
-            {
-                printf("\nX wins!\n");
-                break;
-            }
-            else if (check_winner(board) == 'O')
-            {
-                printf("\nO wins!\n");
-                break;
-            }
-            turn = 'X';
-        }
-    }
     return 0;
 }
 
@@ -245,6 +75,209 @@ void draw_board(char board[SIZE][SIZE])
     }
 }
 
+/* game_loop: game logic loop */
+void game_loop(char board[SIZE][SIZE])
+{
+    int n;
+    int row, col;
+    int moves = 0;
+    char turn = PLAYER_X;
+
+    while (moves < BOARD_SIZE)
+    {
+        if (turn == PLAYER_X)  /* player turn */
+        {
+            do
+            {
+                printf("\nPlayer move: ");
+                if (scanf("%d", &n) != 1 || n < MIN_MOVE || n > BOARD_SIZE)
+                {
+                    while (getchar() != '\n')
+                        ;
+                    n = 0;
+                }
+            } 
+            while (n <= 0);
+
+            /*
+             * Calculate position on board based on number entered:
+             * row will always be 0 - 2 due to integer division (0-8 / 3)
+             * col will be determined by remainder of integer division
+             */
+            row = (n - 1) / SIZE;
+            col = (n - 1) % SIZE;
+
+            if (board[row][col] != PLAYER_X && board[row][col] != PLAYER_O)
+            {
+                board[row][col] = PLAYER_X;
+                moves++;
+                draw_board(board);
+
+                int winner = check_winner(board);
+                if (winner)
+                {
+                    printf("\n%c wins!\n", winner);
+                    break;
+                }
+                if (moves == BOARD_SIZE)
+                {
+                    printf("\nDraw!\n");
+                    break;
+                }
+                turn = PLAYER_O;
+            }
+        }
+        if (turn == PLAYER_O)  /* computer turn */
+        {
+            int b = 0;         /* count blanks */
+            int o = 0;         /* count Os */
+            int x = 0;         /* count Xs */
+            int fork = 0;      /* player occupies opposite corners (1) */
+            int complete = 0;  /* computer move complete (1) */
+            int empty_row = -1;
+            int empty_col = -1;
+
+            /*
+             * Complete a potential win or block a player win:
+             * - Examine each winning pattern (row, column, or diagonal).
+             * - Count Xs, Os, and empty squares in the pattern.
+             * - Record the empty position for a possible winning or blocking move.
+             *
+             * lines[i]     : one complete winning pattern (row, column, or diagonal)
+             * lines[i][j]  : one board position within that pattern
+             *
+             * Outer loop iterates lines[i] through all 8 winning patterns.
+             * Inner loop iterates lines[i][j] through the 3 positions of current pattern.
+             */
+            printf("\nComputer move:\n");
+            for (int i = 0; i < PATTERNS; i++)
+            {
+                x = o = b = 0;
+                empty_row = empty_col = -1;
+                for (int j = 0; j < SIZE; j++)
+                {
+                    int r = lines[i][j].row;
+                    int c = lines[i][j].col;
+                    if (board[r][c] == PLAYER_X)
+                    {
+                        x++;
+                    }
+                    else if (board[r][c] == PLAYER_O)
+                    {
+                        o++;
+                    }
+                    else
+                    {
+                        b++;
+                        empty_row = r;
+                        empty_col = c;
+                    }
+                }
+                if (o == 2 && b == 1)
+                {
+                    board[empty_row][empty_col] = PLAYER_O;
+                    complete = 1;
+                    break;
+                }
+                else if (x == 2 && b == 1)
+                {
+                    board[empty_row][empty_col] = PLAYER_O;
+                    complete = 1;
+                    break;
+                }
+            }
+
+            /*
+             * Computer move priorities (if no block or win is possible):
+             * 1. Take center space if free
+             * 2. If the player occupies two opposite corners (fork) take edge spaces
+             * 3. Otherwise, take available corners in this order: TL, BR, TR, BL
+             * 4. Take the next available empty space
+             */
+            if ((board[0][0] == PLAYER_X && board[2][2] == PLAYER_X) ||
+                (board[0][2] == PLAYER_X && board[2][0] == PLAYER_X))
+            {
+                fork = 1;
+            }
+            if (!complete && board[1][1] != PLAYER_X && board[1][1] != PLAYER_O)
+            {
+                board[1][1] = PLAYER_O;  /* center */
+                complete = 1;
+            }
+            else if (!complete && !fork && board[0][0] != PLAYER_X && board[0][0] != PLAYER_O)
+            {
+                board[0][0] = PLAYER_O;  /* TL */
+                complete = 1;
+            }
+            else if (!complete && !fork && board[2][2] != PLAYER_X && board[2][2] != PLAYER_O)
+            {
+                board[2][2] = PLAYER_O;  /* BR */
+                complete = 1;
+            }
+            else if (!complete && !fork && board[0][2] != PLAYER_X && board[0][2] != PLAYER_O)
+            {
+                board[0][2] = PLAYER_O;  /* TR */
+                complete = 1;
+            }
+            else if (!complete && !fork && board[2][0] != PLAYER_X && board[2][0] != PLAYER_O)
+            {
+                board[2][0] = PLAYER_O;  /* BL */
+                complete = 1;
+            }
+            else if (!complete && fork && board[0][1] != PLAYER_X && board[0][1] != PLAYER_O)
+            {
+                board[0][1] = PLAYER_O;  /* TC */
+                complete = 1;
+            }
+            else if (!complete && fork && board[1][0] != PLAYER_X && board[1][0] != PLAYER_O)
+            {
+                board[1][0] = PLAYER_O;  /* LC */
+                complete = 1;
+            }
+            else if (!complete && fork && board[2][1] != PLAYER_X && board[2][1] != PLAYER_O)
+            {
+                board[2][1] = PLAYER_O;  /* BC */
+                complete = 1;
+            }
+            else if (!complete && fork && board[1][2] != PLAYER_X && board[1][2] != PLAYER_O)
+            {
+                board[1][2] = PLAYER_O;  /* RC */
+                complete = 1;
+            }
+            else  /* take first available empty space */
+            {
+                for (int i = 0; i < SIZE && !complete; i++)
+                {
+                    for (int j = 0; j < SIZE && !complete; j++)
+                    {
+                        if (board[i][j] != PLAYER_X && board[i][j] != PLAYER_O)
+                        {
+                            board[i][j] = PLAYER_O;
+                            complete = 1;
+                        }
+                    }
+                }
+            }
+            moves++;
+            draw_board(board);
+
+            int winner = check_winner(board);
+            if (winner)
+            {
+                printf("\n%c wins!\n", winner);
+                break;
+            }
+            if (moves == BOARD_SIZE)
+            {
+                printf("\nDraw!\n");
+                break;
+            }
+            turn = PLAYER_X;
+        }
+    }
+
+}
+
 /* check_winner: check for a win */
 int check_winner(char board[SIZE][SIZE])
 {
@@ -253,14 +286,14 @@ int check_winner(char board[SIZE][SIZE])
         char symbol = board[lines[i][0].row][lines[i][0].col];
 
         /* only consider lines starting with a valid player mark */
-        if (symbol == 'X' || symbol == 'O')
+        if (symbol == PLAYER_X || symbol == PLAYER_O)
         {
-                if (symbol == board[lines[i][1].row][lines[i][1].col] &&
-                    symbol == board[lines[i][2].row][lines[i][2].col])
+            if (symbol == board[lines[i][1].row][lines[i][1].col] &&
+                symbol == board[lines[i][2].row][lines[i][2].col])
             {
                 return symbol;
             }
         }
     }
-    return NO_WINNER;
+    return EMPTY;
 }
