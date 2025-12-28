@@ -38,16 +38,16 @@ Coord lines[PATTERNS][SIZE] = {
     {{0,2},{1,1},{2,0}}   /* pattern 7: diagonal TR–BL */
 };
 
-void draw_board(char[SIZE][SIZE]);
-void game_loop(char[SIZE][SIZE]);
-int check_winner(char[SIZE][SIZE]);
+void draw_board(char (*board)[SIZE]);
+void game_loop(char (*board)[SIZE]);
+int check_winner(char (*board)[SIZE]);
 
 int main(void)
 {
     int c = 1;
     char board[SIZE][SIZE];  /* 3x3 tic-tac-toe board */
     
-    printf("Tic-tac-toe\n\n");
+    printf("Tic-Tac-Toe\n\n");
 
     /* populate game board with numbers for selection (1-9) */
     for (int i = 0; i < SIZE; i++)
@@ -65,7 +65,7 @@ int main(void)
 }
 
 /* draw_board: draw and update the game board */
-void draw_board(char board[SIZE][SIZE])
+void draw_board(char (*board)[SIZE])
 {
     for (int i = 0; i < SIZE; i++)
     {
@@ -79,7 +79,7 @@ void draw_board(char board[SIZE][SIZE])
 }
 
 /* game_loop: game logic loop */
-void game_loop(char board[SIZE][SIZE])
+void game_loop(char (*board)[SIZE])
 {
     int n;
     int row, col;
@@ -281,7 +281,7 @@ void game_loop(char board[SIZE][SIZE])
 }
 
 /* check_winner: check for a win */
-int check_winner(char board[SIZE][SIZE])
+int check_winner(char (*board)[SIZE])
 {
     for (int i = 0; i < PATTERNS; i++)
     {
