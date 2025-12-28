@@ -11,13 +11,15 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#define msleep(ms) Sleep(ms)
+#else
+#include <unistd.h>
+#define msleep(ms) usleep((ms) * 1000)  /* millisecond to microsecond */
 #endif
 
 #define CHAR1 "\u2571"
 #define CHAR2 "\u2572"
-#define DELAY 5
-
-void sleep_ms(unsigned int ms);
+#define DELAY 5  /* milliseconds */
 
 int main(void)
 {
@@ -30,18 +32,6 @@ int main(void)
     for (;;) {
         printf("%s", (rand() % 2) ? CHAR1 : CHAR2);
         fflush(stdout);
-        sleep_ms(DELAY);
+        msleep(DELAY);
     }
-}
-
-void sleep_ms(unsigned int ms)
-{
-#ifdef _WIN32  /* Windows: Sleep takes milliseconds */
-    Sleep(ms);
-#else          /* POSIX: nanosleep takes seconds + nanoseconds */
-    struct timespec ts;
-    ts.tv_sec = ms / 1000;
-    ts.tv_nsec = (ms % 1000) * 1000000L;
-    nanosleep(&ts, NULL);
-#endif 
 }
