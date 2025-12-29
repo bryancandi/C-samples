@@ -3,6 +3,12 @@
  *
  * C version of the classic CBM BASIC “10 PRINT” maze program:
  * 10 PRINT CHR$(205.5+RND(1)); : GOTO 10
+ *
+ * Uses Unicode diagonal line characters to render the maze.
+ * Includes a cross-platform millisecond delay macro, msleep().
+ *
+ * Author: Bryan C.
+ * Date: December 23, 2025
  */
 
 #include <stdio.h>
