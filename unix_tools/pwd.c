@@ -1,12 +1,13 @@
 /*
- * pwd -- print working directory
+ * pwd: print working directory
  * Classic inode-walking implementation
- * 
+ *
  * Author: Bryan C
  * Date: December 30, 2025
  */
 
 #include <dirent.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,25 +20,26 @@
 
 int main(void)
 {
-    struct stat dot, dotdot;
+    struct stat currentd, parentd;
     char path[PATH_MAX] = "";
-    char component[PATH_MAX];
 
-    while (1)
-    {
-        stat(".", &dot);
-        stat("..", &dotdot);
+    while (1) {
+        /* stat "." and ".." to identify current directory and its parent */
+        if (stat(".", &currentd) == -1 || stat("..", &parentd) == -1) {
+            perror("pwd: stat");
+            exit(1);
+        }
 
-        /* root reached */
-        if (dot.st_ino == dotdot.st_ino &&
-            dot.st_dev == dotdot.st_dev) {
+        /* current is parent; root reached */
+        if (currentd.st_ino == parentd.st_ino &&
+            currentd.st_dev == parentd.st_dev) {
             break;
         }
 
         struct dirent *dp;
         DIR *dfd = opendir("..");
 
-        if (!dfd) {
+        if (!dfd) {  /* opendir failed, exit */
             perror("pwd: opendir");
             exit(1);
         }
@@ -58,26 +60,27 @@ int main(void)
                 continue;
             }
 
-            /* check for the directory we came from */
-            if (entry.st_ino == dot.st_ino &&
-                entry.st_dev == dot.st_dev) {
-
-                /* found current (dot) name */
-                strcpy(component, dp->d_name);
-
-                /* prepend "/component" to path */
+            /* check for the directory we came from in current directory */
+            if (entry.st_ino == currentd.st_ino &&
+                entry.st_dev == currentd.st_dev) {
+                /* prepend current directory name to path */
                 char tmp[PATH_MAX];
-                snprintf(tmp, sizeof(tmp), "/%s%s", component, path);
+                snprintf(tmp, sizeof(tmp), "/%s%s", dp->d_name, path);
                 strcpy(path, tmp);
                 break;
             }
         }
 
         closedir(dfd);
-        chdir("..");  /* move up one level */
+
+        /* move up one level */
+        if (chdir("..") == -1) {
+            perror("pwd: chdir");
+            exit(1);
+        }
     }
 
-    /* print "/" if no path (root) */
+    /* path is empty; print root */
     printf("%s\n", path[0] ? path : "/");
     return 0;
 }
