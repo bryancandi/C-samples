@@ -1,19 +1,27 @@
 /*
  * pwd -- print working directory
+ * Classic inode-walking implementation
+ * 
+ * Author: Bryan C
+ * Date: December 30, 2025
  */
 
+#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
 
 int main(void)
 {
     struct stat dot, dotdot;
-    char path[4096] = "";
-    char component[256];
+    char path[PATH_MAX] = "";
+    char component[PATH_MAX];
 
     while (1)
     {
@@ -30,21 +38,23 @@ int main(void)
         DIR *dfd = opendir("..");
 
         if (!dfd) {
-            fprintf(stderr, "pwd: opendir error\n");
+            perror("pwd: opendir");
             exit(1);
         }
 
         while ((dp = readdir(dfd)) != NULL) {
+            /* skip self and parent entries */
             if (strcmp(dp->d_name, ".") == 0 ||
                 strcmp(dp->d_name, "..") == 0) {
                 continue;
             }
 
             struct stat entry;
-            char entry_path[512];
+            char entry_path[PATH_MAX];
             snprintf(entry_path, sizeof(entry_path), "../%s", dp->d_name);
 
-            if (stat(entry_path, &entry) == -1) {  /* error */
+            /* cannot stat entry, skip */
+            if (stat(entry_path, &entry) == -1) {
                 continue;
             }
 
@@ -56,7 +66,7 @@ int main(void)
                 strcpy(component, dp->d_name);
 
                 /* prepend "/component" to path */
-                char tmp[4096];
+                char tmp[PATH_MAX];
                 snprintf(tmp, sizeof(tmp), "/%s%s", component, path);
                 strcpy(path, tmp);
                 break;
@@ -67,6 +77,7 @@ int main(void)
         chdir("..");  /* move up one level */
     }
 
+    /* print "/" if no path (root) */
     printf("%s\n", path[0] ? path : "/");
     return 0;
 }
