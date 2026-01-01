@@ -8,6 +8,7 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include <dirent.h>     /* standard POSIX dirent.h */
+#include <inttypes.h>
 #include <limits.h>
 #include <pwd.h>
 #include <stdio.h>
@@ -51,6 +52,7 @@ void fsize(char *name)
 
     struct passwd *pw = getpwuid(stbuf.st_uid);
 
+    printf("%ju ", (uintmax_t)stbuf.st_dev);  /* device identifier */
     printf("%5lu ", stbuf.st_ino);            /* inode number */
     printf("%6o ", stbuf.st_mode);            /* file mode in octal */
     printf("%3lu ", stbuf.st_nlink);          /* number of links */
