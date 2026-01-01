@@ -1,6 +1,6 @@
 /*
- * pwd: print working directory
- * Classic inode-walking implementation
+ * pwd: Print working (current) directory
+ * Print working directory by walking up the tree and matching directory inodes
  *
  * Author: Bryan C
  * Date: December 30, 2025
@@ -31,8 +31,7 @@ int main(void)
         }
 
         /* current is parent; root reached */
-        if (currentd.st_ino == parentd.st_ino &&
-            currentd.st_dev == parentd.st_dev) {
+        if (currentd.st_ino == parentd.st_ino && currentd.st_dev == parentd.st_dev) {
             break;
         }
 
@@ -46,23 +45,22 @@ int main(void)
 
         while ((dp = readdir(dfd)) != NULL) {
             /* skip self and parent entries */
-            if (strcmp(dp->d_name, ".") == 0 ||
-                strcmp(dp->d_name, "..") == 0) {
+            if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) {
                 continue;
             }
 
+            /* form pathname of parent directory entries to identify current directory */
             struct stat entry;
-            char entry_path[PATH_MAX];
-            snprintf(entry_path, sizeof(entry_path), "../%s", dp->d_name);
+            char entrypath[PATH_MAX];
+            snprintf(entrypath, sizeof(entrypath), "../%s", dp->d_name);
 
-            /* cannot stat entry, skip */
-            if (stat(entry_path, &entry) == -1) {
+            /* cannot stat entry; skip */
+            if (stat(entrypath, &entry) == -1) {
                 continue;
             }
 
             /* check for the directory we came from in current directory */
-            if (entry.st_ino == currentd.st_ino &&
-                entry.st_dev == currentd.st_dev) {
+            if (entry.st_ino == currentd.st_ino && entry.st_dev == currentd.st_dev) {
                 /* prepend current directory name to path */
                 char tmp[PATH_MAX];
                 snprintf(tmp, sizeof(tmp), "/%s%s", dp->d_name, path);
@@ -80,7 +78,7 @@ int main(void)
         }
     }
 
-    /* path is empty; print root */
+    /* print path; path is empty: print root */
     printf("%s\n", path[0] ? path : "/");
     return 0;
 }
