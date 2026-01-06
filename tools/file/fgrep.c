@@ -3,7 +3,7 @@
  * A simple fixed-string search program, inspired by Unix `fgrep`
  * Matching substrings are highlighted in red using ANSI escape codes
  * Usage: ./fgrep PATTERN [FILE]...
- * Author: Bryan C.
+ * Author: Bryan C
  * Date: December 23, 2025
  */
 
@@ -64,21 +64,50 @@ void patterncmp(FILE *ifp, char *pattern)
         {
             buf[n] = '\0';
             char *p;          /* pointer for strstr */
-            char *pos = buf;  /* updateable pointer to position in buf */
+            char *pos = buf;  /* scanning pointer for current position in buf */
             int found = 0;    /* default: no match */
 
-            while ((p = strstr(pos, pattern)) != NULL)
+            if (pattern[0] == '^')  /* match only if line starts with pattern (skip leading '^') */
             {
-                int p_start = p - pos;  /* integer position of pattern start in pos (buf) */    
-
-                for (int i = 0; i < p_start; i++)  /* print characters before pattern */
+                if (strstr(buf, pattern + 1) == buf)  /* move pos past the matched pattern */
                 {
-                    putchar(pos[i]);
+                    pos = pos + strlen(pattern + 1);
+                    printf("\033[0;31m%s\033[0m%s", pattern + 1, pos);
                 }
-                printf("\033[0;31m%s\033[0m", pattern); /* print pattern in red then reset color */
+            }
+            if (pattern[strlen(pattern) - 1] == '$')  /* match only if line ends with pattern (skip trailing '$') */
+            {
+                int blen = strlen(buf);
+                int plen = strlen(pattern) - 1;
 
-                found = 1;  /* signal a match */
-                pos = p + strlen(pattern);  /* update pos past the last matched pattern */
+                if (buf[blen - 1] == '\n')  /* remove trailing newline if present in buf */
+                {
+                    blen--;
+                }
+
+                char *tail = buf + (blen - plen);  /* pointer to start of pattern at end of line */
+
+                if (strncmp(tail, pattern, plen) == 0)
+                {
+                    printf("%.*s", (int)(tail - buf), buf);
+                    printf("\033[0;31m%.*s\033[0m\n", plen, pattern);
+                }
+            }
+            else
+            {
+                while ((p = strstr(pos, pattern)) != NULL)
+                {
+                    int p_start = p - pos;  /* integer position of pattern start in pos (buf) */    
+
+                    for (int i = 0; i < p_start; i++)  /* print characters before pattern */
+                    {
+                        putchar(pos[i]);
+                    }
+                    printf("\033[0;31m%s\033[0m", pattern); /* print pattern in red then reset color */
+
+                    found = 1;  /* signal a match */
+                    pos = p + strlen(pattern);  /* update pos past the last matched pattern */
+                }
             }
 
             if (found)  /* print remainder of line after last match */
