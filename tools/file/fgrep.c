@@ -66,8 +66,29 @@ void patterncmp(FILE *ifp, char *pattern)
             char *p;          /* pointer for strstr */
             char *pos = buf;  /* scanning pointer for current position in buf */
             int found = 0;    /* default: no match */
+            int blen = strlen(buf);          /* length of line in buf */
+            int plen = strlen(pattern) - 1;  /* length of pattern minus 1 (last index) */
 
-            if (pattern[0] == '^')  /* match only if line starts with pattern (skip leading '^') */
+            /* match only if line matches pattern exactly (^pattern$) */
+            if (pattern[0] == '^' && pattern[plen] == '$')
+            {
+                if (buf[blen - 1] == '\n')
+                {
+                    buf[blen - 1] = '\0';
+                    blen--;
+                }
+
+                char *inner_pattern = pattern + 1;     /* skip past '^' */
+                int inner_plen = strlen(pattern) - 2;  /* ignore last char '$' */
+
+                if (blen == inner_plen && strncmp(buf, inner_pattern, inner_plen) == 0)
+                {
+                    printf("\033[0;31m%s\033[0m\n", buf);
+                }
+            }
+
+            /* match only if line starts with pattern (skip leading '^') */
+            else if (pattern[0] == '^')
             {
                 if (strstr(buf, pattern + 1) == buf)  /* move pos past the matched pattern */
                 {
@@ -75,11 +96,10 @@ void patterncmp(FILE *ifp, char *pattern)
                     printf("\033[0;31m%s\033[0m%s", pattern + 1, pos);
                 }
             }
-            if (pattern[strlen(pattern) - 1] == '$')  /* match only if line ends with pattern (skip trailing '$') */
-            {
-                int blen = strlen(buf);
-                int plen = strlen(pattern) - 1;
 
+            /* match only if line ends with pattern (skip trailing '$') */
+            else if (pattern[plen] == '$')
+            {
                 if (buf[blen - 1] == '\n')  /* remove trailing newline if present in buf */
                 {
                     blen--;
@@ -93,11 +113,13 @@ void patterncmp(FILE *ifp, char *pattern)
                     printf("\033[0;31m%.*s\033[0m\n", plen, pattern);
                 }
             }
+
+            /* match if the pattern occurs anywhere in the line */
             else
             {
                 while ((p = strstr(pos, pattern)) != NULL)
                 {
-                    int p_start = p - pos;  /* integer position of pattern start in pos (buf) */    
+                    int p_start = p - pos;  /* integer position of pattern start in pos (buf) */
 
                     for (int i = 0; i < p_start; i++)  /* print characters before pattern */
                     {
@@ -110,7 +132,8 @@ void patterncmp(FILE *ifp, char *pattern)
                 }
             }
 
-            if (found)  /* print remainder of line after last match */
+            /* print remainder of line after last match */
+            if (found)
             {
                 fputs(pos, stdout);
             }
