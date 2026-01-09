@@ -1,17 +1,25 @@
 /*
- * ttt.c
+ * Terminal-based Tic-Tac-Toe game
  *
- * Terminal-based Tic-Tac-Toe game.
+ * Version: 1.0
+ *
  * Computer opponent selects moves using a simple priority system:
  *   1. Complete a winning line if possible.
  *   2. Block the player from winning.
- *   3. Take remaining spaces based on the player's moves.
+ *   3. Choose remaining spaces based on the player's moves.
+ *
+ * Requires an ANSI-capable UTF-8 terminal (Linux, macOS, Windows Terminal)
  *
  * Author: Bryan C.
- * Date: December 26, 2025
+ * Date: 2025-12-26
  */
 
 #include <stdio.h>
+
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 #define SIZE        3
 #define PATTERNS    8
@@ -21,13 +29,27 @@
 #define PLAYER_O   'O'
 #define EMPTY       0
 
+/* ANSI color codes */
+#define DEF  "\x1B[0m"
+#define BLD  "\x1B[1m"
+#define UNL  "\x1B[4m"
+#define RED  "\x1B[31m"
+#define YEL  "\x1B[33m"
+#define MAG  "\x1B[35m"
+#define CYN  "\x1B[36m"
+
+/* Unicode box-drawing characters */
+#define VERT   "\u2502"  /* │ */
+#define HORZ   "\u2500"  /* ─ */
+#define CROSS  "\u253C"  /* ┼ */
+
 typedef struct {
     int row;
     int col;
 } Coord;
 
 /* all 8 possible winning patterns */
-Coord lines[PATTERNS][SIZE] = {
+static const Coord lines[PATTERNS][SIZE] = {
     {{0,0},{0,1},{0,2}},  /* pattern 0: top row */
     {{1,0},{1,1},{1,2}},  /* pattern 1: middle row */
     {{2,0},{2,1},{2,2}},  /* pattern 2: bottom row */
@@ -44,10 +66,15 @@ int check_winner(char (*board)[SIZE]);
 
 int main(void)
 {
+/* Enable UTF-8 output on Windows consoles for Unicode characters */
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+
     int c = 1;
     char board[SIZE][SIZE];  /* 3x3 tic-tac-toe board */
-    
-    printf("Tic-Tac-Toe\n\n");
+
+    printf("%s%s%sTic-Tac-Toe%s\n", UNL, BLD, RED, DEF);
 
     /* populate game board with numbers for selection (1-9) */
     for (int i = 0; i < SIZE; i++)
@@ -67,15 +94,36 @@ int main(void)
 /* draw_board: draw and update the game board */
 void draw_board(char (*board)[SIZE])
 {
+    putchar('\n');
     for (int i = 0; i < SIZE; i++)
     {
+        putchar(' ');
         for (int j = 0; j < SIZE; j++)
         {
-            putchar(board[i][j]);
-            putchar(' ');
+            if (board[i][j] == PLAYER_X)
+            {
+                printf("%s%c%s", CYN, board[i][j], DEF);
+            }
+            else if (board[i][j] == PLAYER_O)
+            {
+                printf("%s%c%s", YEL, board[i][j], DEF);
+            }
+            else
+            {
+                putchar(board[i][j]);
+            }
+            if (j < SIZE - 1)
+            {
+                printf(" %s ", VERT);
+            }
         }
         putchar('\n');
+        if (i < SIZE - 1)
+        {
+            puts(HORZ HORZ HORZ CROSS HORZ HORZ HORZ CROSS HORZ HORZ HORZ);
+        }
     }
+    putchar('\n');
 }
 
 /* game_loop: game logic loop */
@@ -92,14 +140,14 @@ void game_loop(char (*board)[SIZE])
         {
             do
             {
-                printf("\nPlayer move: ");
+                printf("Player turn: ");
                 if (scanf("%d", &n) != 1 || n < MIN_MOVE || n > BOARD_SIZE)
                 {
                     while (getchar() != '\n')
                         ;
                     n = 0;
                 }
-            } 
+            }
             while (n <= 0);
 
             /*
@@ -119,12 +167,12 @@ void game_loop(char (*board)[SIZE])
                 int winner = check_winner(board);
                 if (winner)
                 {
-                    printf("\n%c wins!\n", winner);
+                    printf("%s%s%c wins!%s\n", BLD, CYN, winner, DEF);
                     break;
                 }
                 if (moves == BOARD_SIZE)
                 {
-                    printf("\nDraw!\n");
+                    printf("%s%sDraw!%s\n", BLD, MAG, DEF);
                     break;
                 }
                 turn = PLAYER_O;
@@ -152,7 +200,7 @@ void game_loop(char (*board)[SIZE])
              * Outer loop iterates lines[i] through all 8 winning patterns.
              * Inner loop iterates lines[i][j] through the 3 positions of current pattern.
              */
-            printf("\nComputer move:\n");
+            printf("Computer turn:\n");
             for (int i = 0; i < PATTERNS; i++)
             {
                 x = o = b = 0;
@@ -267,12 +315,12 @@ void game_loop(char (*board)[SIZE])
             int winner = check_winner(board);
             if (winner)
             {
-                printf("\n%c wins!\n", winner);
+                printf("%s%s%c wins!%s\n", BLD, YEL, winner, DEF);
                 break;
             }
             if (moves == BOARD_SIZE)
             {
-                printf("\nDraw!\n");
+                printf("%s%sDraw!%s\n", BLD, MAG, DEF);
                 break;
             }
             turn = PLAYER_X;
