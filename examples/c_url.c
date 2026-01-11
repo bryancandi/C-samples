@@ -6,14 +6,13 @@
 
 int main(void)
 {
-    int i = 0;
-    char str[] = "hello, world!\n";
+    const char *s = "hello, world!\n";
 
 https://www.kernel.org/
 
-    if (str[i] != '\0')
+    if (*s != '\0')
     {
-        putchar(str[i++]);
+        putchar(*s++);
         goto https;
     }
 
