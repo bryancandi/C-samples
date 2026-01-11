@@ -1,10 +1,11 @@
 /*
- * fgrep.c
  * A simple fixed-string search program, inspired by Unix `fgrep`
+ *
  * Matching substrings are highlighted in red using ANSI escape codes
  * Usage: ./fgrep PATTERN [FILE]...
- * Author: Bryan C
- * Date: December 23, 2025
+ *
+ * Author: Bryan C.
+ * Date: 2025-12-23
  */
 
 #include <stdio.h>
@@ -72,7 +73,7 @@ void patterncmp(FILE *ifp, char *pattern)
             /* match only if line matches pattern exactly (^pattern$) */
             if (pattern[0] == '^' && pattern[plen] == '$')
             {
-                if (buf[blen - 1] == '\n')
+                if (buf[blen - 1] == '\n')  /* remove trailing newline if present in buf */
                 {
                     buf[blen - 1] = '\0';
                     blen--;
@@ -100,7 +101,7 @@ void patterncmp(FILE *ifp, char *pattern)
             /* match only if line ends with pattern (skip trailing '$') */
             else if (pattern[plen] == '$')
             {
-                if (buf[blen - 1] == '\n')  /* remove trailing newline if present in buf */
+                if (buf[blen - 1] == '\n')
                 {
                     blen--;
                 }
@@ -138,7 +139,8 @@ void patterncmp(FILE *ifp, char *pattern)
                 fputs(pos, stdout);
             }
 
-            n = 0;  /* reset buffer for next line */
+            /* reset buffer counter for next line */
+            n = 0;
         }
     }
 }
