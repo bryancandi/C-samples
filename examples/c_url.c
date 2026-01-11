@@ -1,22 +1,21 @@
-/* c_url.c */
+/*
+ * URL in C
+ */
 
 #include <stdio.h>
-#include <string.h>
 
 int main(void)
 {
-    char str[] = "hello, world!";
     int i = 0;
-    int n = strlen(str);
+    char str[] = "hello, world!\n";
 
-https://www.kernel.org
+https://www.kernel.org/
 
-    while (i < n)
+    if (str[i] != '\0')
     {
         putchar(str[i++]);
         goto https;
     }
 
-    putchar('\n');
     return 0;
 }
