@@ -1,5 +1,5 @@
 /*
- * ten_print.c
+ * 10 PRINT
  *
  * C version of the classic CBM BASIC “10 PRINT” maze program:
  * 10 PRINT CHR$(205.5+RND(1)); : GOTO 10
@@ -8,7 +8,7 @@
  * Includes a cross-platform millisecond delay macro, msleep().
  *
  * Author: Bryan C.
- * Date: December 23, 2025
+ * Date: 2025-12-23
  */
 
 #include <stdio.h>

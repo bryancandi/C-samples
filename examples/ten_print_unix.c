@@ -1,5 +1,5 @@
 /*
- * ten_print_unix.c
+ * 10 PRINT (UNIX)
  *
  * "Early C" version of the classic CBM BASIC “10 PRINT” maze program:
  * 10 PRINT CHR$(205.5+RND(1)); : GOTO 10
@@ -8,7 +8,7 @@
  * Use Ctrl+\ (Quit signal) to terminate.
  *
  * Author: Bryan C.
- * Date: December 29, 2025
+ * Date: 2025-12-29
  */
 
 main()
