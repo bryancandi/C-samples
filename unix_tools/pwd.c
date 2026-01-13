@@ -1,9 +1,9 @@
 /*
  * pwd: Print working (current) directory
- * Print working directory by walking up the tree and matching directory inodes
+ * Print working directory by walking up the tree and matching directory inodes.
  *
- * Author: Bryan C
- * Date: December 30, 2025
+ * Author: Bryan C.
+ * Date: 2025-12-30
  */
 
 #include <dirent.h>
