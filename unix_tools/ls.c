@@ -11,20 +11,19 @@
 #define _DEFAULT_SOURCE
 
 #include <dirent.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void printdir(struct dirent **namelist, int n, int a, int l, int r);
+void printdir(struct dirent **namelist, int n, int a);
 void freedir(struct dirent **namelist, int n);
 
 int main(int argc, char *argv[])
 {
     struct dirent **namelist;
     int n;
-    int flag_all = 0;
-    int flag_long = 0;
-    int flag_rev = 0;
+    int opt_a = 0;
 
     /* advance past program name */
     argc--;
@@ -37,11 +36,11 @@ int main(int argc, char *argv[])
         {
             if (*p++ == 'a')
             {
-                flag_all = 1;
+                opt_a = 1;
             }
             else
             {
-                fprintf(stderr, "ls: invalid flag %c\n", *--p);
+                fprintf(stderr, "ls: illegal option '%c'\n", *--p);
                 return 1;
             }
         }
@@ -56,7 +55,7 @@ int main(int argc, char *argv[])
             perror("ls");
             return 1;
         }
-        printdir(namelist, n, flag_all, flag_long, flag_rev);
+        printdir(namelist, n, opt_a);
         freedir(namelist, n);
         free(namelist);
     }
@@ -67,14 +66,14 @@ int main(int argc, char *argv[])
             n = scandir(argv[i], &namelist, NULL, alphasort);
             if (n == -1)
             {
-                perror("ls");
+                fprintf(stderr, "ls: cannot access '%s': %s\n", argv[i], strerror(errno));
                 return 1;
             }
             if (argc > 1)
             {
                 printf("%s:\n", argv[i]);
             }
-            printdir(namelist, n, flag_all, flag_long, flag_rev);
+            printdir(namelist, n, opt_a);
             freedir(namelist, n);
             free(namelist);
             if (i < argc - 1)
@@ -86,8 +85,8 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-/* Print directory entry names from namelist, excluding "." and "..". */
-void printdir(struct dirent **namelist, int n, int a, int l, int r)
+/* Print directory entry names from namelist; handle optional arguments */
+void printdir(struct dirent **namelist, int n, int a)
 {
     for (int i = 0; i < n; i++)
     {
