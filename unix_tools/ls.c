@@ -1,7 +1,8 @@
 /*
  * ls: list directory contents
+ * Usage: ls [OPTION]... [DIR]...
  *
- * TODO: add flags (-a, -l, -r) for additional output styles
+ * TODO: add flags (-l, -r) for additional output styles
  *
  * Author: Bryan C.
  * Date: 2026-01-24
@@ -14,41 +15,69 @@
 #include <stdlib.h>
 #include <string.h>
 
-void printdir(struct dirent **namelist, int n);
+void printdir(struct dirent **namelist, int n, int a, int l, int r);
 void freedir(struct dirent **namelist, int n);
 
 int main(int argc, char *argv[])
 {
     struct dirent **namelist;
     int n;
+    int flag_all = 0;
+    int flag_long = 0;
+    int flag_rev = 0;
 
-    if (argc == 1)
+    /* advance past program name */
+    argc--;
+    argv++;
+
+    while (argc > 0 && argv[0][0] == '-')
+    {
+        const char *p = argv[0] + 1;
+        while (*p)
+        {
+            if (*p++ == 'a')
+            {
+                flag_all = 1;
+            }
+            else
+            {
+                fprintf(stderr, "ls: invalid flag %c\n", *--p);
+                return 1;
+            }
+        }
+        argc--;
+        argv++;
+    }
+    if (argc == 0)
     {
         n = scandir(".", &namelist, NULL, alphasort);
         if (n == -1)
         {
-            perror("scandir");
+            perror("ls");
             return 1;
         }
-        printdir(namelist, n);
+        printdir(namelist, n, flag_all, flag_long, flag_rev);
         freedir(namelist, n);
         free(namelist);
     }
     else
     {
-        while (--argc > 0)
+        for (int i = 0; i < argc; i++)
         {
-            n = scandir(*++argv, &namelist, NULL, alphasort);
+            n = scandir(argv[i], &namelist, NULL, alphasort);
             if (n == -1)
             {
-                perror("scandir");
+                perror("ls");
                 return 1;
             }
-            printf("%s:\n", *argv);
-            printdir(namelist, n);
+            if (argc > 1)
+            {
+                printf("%s:\n", argv[i]);
+            }
+            printdir(namelist, n, flag_all, flag_long, flag_rev);
             freedir(namelist, n);
             free(namelist);
-            if (argc > 1)
+            if (i < argc - 1)
             {
                 printf("\n");
             }
@@ -58,13 +87,20 @@ int main(int argc, char *argv[])
 }
 
 /* Print directory entry names from namelist, excluding "." and "..". */
-void printdir(struct dirent **namelist, int n)
+void printdir(struct dirent **namelist, int n, int a, int l, int r)
 {
     for (int i = 0; i < n; i++)
     {
-        if (strcmp(namelist[i]->d_name, ".") != 0 && strcmp(namelist[i]->d_name, "..") != 0)
+        if (a == 1)
         {
             printf("%s\n", namelist[i]->d_name);
+        }
+        else
+        {
+            if (strcmp(namelist[i]->d_name, ".") != 0 && strcmp(namelist[i]->d_name, "..") != 0)
+            {
+                printf("%s\n", namelist[i]->d_name);
+            }
         }
     }
 }
