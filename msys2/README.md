@@ -19,12 +19,16 @@ pacman -S --needed base-devel
 ```powershell
 pacman -S mingw-w64-x86_64-gcc
 pacman -S mingw-w64-x86_64-clang
+# For the complete MINGW64 toolchain:
+pacman -S mingw-w64-x86_64-toolchain
 ```
 
 ### UCRT64
 ```powershell
 pacman -S mingw-w64-ucrt-x86_64-gcc
 pacman -S mingw-w64-ucrt-x86_64-clang
+# For the complete UCRT64 toolchain:
+pacman -S mingw-w64-ucrt-x86_64-toolchain
 ```
 
 ### Set Environment PATH
