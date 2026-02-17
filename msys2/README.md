@@ -6,12 +6,12 @@ winget install MSYS2.MSYS2
 
 ### MSYS2
 ```powershell
-# Update MSYS2 core system (first run)
+# Update MSYS2 core system (first run).
 pacman -Syu
-# Close the terminal completely
-# Reopen MSYS2 shell and finish updating
+# Close the terminal completely.
+# Reopen MSYS2 shell and finish updating.
 pacman -Syu
-# Install MSYS build tools (make, find, etc.)
+# Install MSYS build tools (make, find, etc.).
 pacman -S --needed base-devel
 ```
 
@@ -19,7 +19,7 @@ pacman -S --needed base-devel
 ```powershell
 pacman -S mingw-w64-x86_64-gcc
 pacman -S mingw-w64-x86_64-clang
-# For the complete MINGW64 toolchain:
+# Install the complete MINGW64 toolchain.
 pacman -S mingw-w64-x86_64-toolchain
 ```
 
@@ -27,30 +27,49 @@ pacman -S mingw-w64-x86_64-toolchain
 ```powershell
 pacman -S mingw-w64-ucrt-x86_64-gcc
 pacman -S mingw-w64-ucrt-x86_64-clang
-# For the complete UCRT64 toolchain:
+# Install the complete UCRT64 toolchain.
 pacman -S mingw-w64-ucrt-x86_64-toolchain
+```
+
+### CLANG64 &mdash; AddressSanitizer
+*Use AddressSanitizer to detect memory errors on Windows using the MSYS2 clang64 environment.*
+```powershell
+# Install the CLANG64 toolchain (includes ASan runtime).
+pacman -S mingw-w64-clang-x86_64-toolchain
+# Compile with AddressSanitizer enabled.
+clang -fsanitize=address -g -O1 <input.c> -o <output.exe> -<windows_libs>
+# Run the instrumented executable.
+.\output.exe
 ```
 
 ### Set Environment PATH
 *Using the PowerShell scripts is safer and recommended, since it avoids overriding Windows tools globally.*
 
 ```powershell
-# Use provided PowerShell scripts to temporarily include MSYS2 tools and toolchains in PATH
-# (modifies PATH only for the current PowerShell session)
-# Run in your PowerShell terminal:
-.\mingw64-env.ps1   # for MINGW64 toolchain
-.\ucrt64-env.ps1    # for UCRT64 toolchain
+# Use provided PowerShell scripts to load one toolchain into PATH for the current session.
+.\mingw64-env.ps1   # MINGW64 (MSVCRT)
+.\ucrt64-env.ps1    # UCRT64 (UCRT)
+.\clang64-env.ps1   # CLANG64 (UCRT + ASan support)
+
+# Optional: manually prepend MSYS2 paths for ad‑hoc use.
+$env:PATH = "C:\msys64\usr\bin;C:\msys64\<env>\bin;$env:PATH"
 ```
 
+*Only do this if you want MSYS2 tools available in every PowerShell session. (**Not Recommended**)*
+
 ```powershell
-# Alternatively, add to your user environment PATH (persistent)
-# WARNING: Adding C:\msys64\usr\bin globally can override Windows tools (find, sort, etc.)
-# Only include ONE toolchain in PATH at a time: MINGW64 OR UCRT64
+# WARNING:
+# Adding C:\msys64\usr\bin globally can override built‑in Windows tools
+# (find.exe, sort.exe, fc.exe, etc.).
+# Only add ONE toolchain to PATH at a time.
+
 C:\msys64\usr\bin
-# AND
+# AND one of:
 C:\msys64\mingw64\bin
 # OR
 C:\msys64\ucrt64\bin
+# OR
+C:\msys64\clang64\bin
 ```
 
 ### MSVCRT vs UCRT
