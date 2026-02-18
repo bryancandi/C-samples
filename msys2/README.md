@@ -42,15 +42,6 @@ clang -fsanitize=address -g -O1 input.c -o output.exe [-l<lib> ...]
 .\output.exe
 ```
 
-### MSVC &mdash; AddressSanitizer
-*Use AddressSanitizer to detect memory errors on Windows using MSVC (Microsoft Visual Studio).*
-```powershell
-# Compile with AddressSanitizer enabled.
-cl.exe input.c /fsanitize=address /Zi [lib ...] /link /DEBUG
-# Run the instrumented executable.
-.\output.exe
-```
-
 ### Set Environment PATH
 *Using the PowerShell scripts is safer and recommended, since it avoids overriding Windows tools globally.*
 
@@ -81,5 +72,12 @@ C:\msys64\ucrt64\bin
 C:\msys64\clang64\bin
 ```
 
-### MSVCRT vs UCRT
-- [MSYS2 Environments](https://www.msys2.org/docs/environments/)
+> [!TIP]
+> **MSVCRT vs UCRT**
+> - [MSYS2 Environments](https://www.msys2.org/docs/environments/)
+
+> [!NOTE]
+> **MSVC also supports AddressSanitizer.**
+> ```powershell
+> cl.exe input.c /fsanitize=address /Zi [lib ...] /link /DEBUG
+> ```
