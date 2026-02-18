@@ -37,7 +37,16 @@ pacman -S mingw-w64-ucrt-x86_64-toolchain
 # Install the CLANG64 toolchain (includes ASan runtime).
 pacman -S mingw-w64-clang-x86_64-toolchain
 # Compile with AddressSanitizer enabled.
-clang -fsanitize=address -g -O1 <input.c> -o <output.exe> -<windows_libs>
+clang -fsanitize=address -g -O1 input.c -o output.exe [-l<lib> ...]
+# Run the instrumented executable.
+.\output.exe
+```
+
+### MSVC &mdash; AddressSanitizer
+*Use AddressSanitizer to detect memory errors on Windows using MSVC (Microsoft Visual Studio).*
+```powershell
+# Compile with AddressSanitizer enabled.
+cl.exe input.c /fsanitize=address /Zi [lib ...] /link /DEBUG
 # Run the instrumented executable.
 .\output.exe
 ```
