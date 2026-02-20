@@ -26,3 +26,7 @@
 | ll, LL    | `d`, `i`, `o`, `u`, `x`, or `X` for `long long int` or `unsigned long long int` |
 | t, I      | `d`, `i`, `o`, `u`, `x`, or `X` for `ptrdiff_t` |
 | z, I      | `d`, `i`, `o`, `u`, `x`, or `X` for  `size_t` |
+
+> [!NOTE]
+> #### Microsoft-specific:
+> The `I` (uppercase i), `I32`, `I64`, and `w` argument size modifier prefixes are Microsoft extensions and are not ISO C-compatible. The `h` prefix when it's used with data of type `char` and the `l` (lowercase L) prefix when it's used with data of type `double` are Microsoft extensions.
