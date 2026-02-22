@@ -13,7 +13,7 @@ typedef struct Node {
 
 void insert(Node **head, int data)
 {
-    Node* new_node = malloc(sizeof(Node));
+    Node *new_node = malloc(sizeof(Node));
     if (new_node == NULL)
         return;
 
@@ -27,7 +27,7 @@ void insert(Node **head, int data)
     *head = new_node;
 }
 
-void print_list(Node *head)
+void print_list_fwd(Node *head)
 {
     Node *list = head;
 
@@ -35,6 +35,24 @@ void print_list(Node *head)
     {
         printf("%d ", list->data);
         list = list->next;
+    }
+    putchar('\n');
+}
+
+void print_list_rev(Node *head)
+{
+    Node *list = head;
+    Node *tail = NULL;
+
+    while(list)
+    {
+        tail = list;
+        list = list->next;
+    }
+    while(tail)
+    {
+        printf("%d ", tail->data);
+        tail = tail->prev;
     }
     putchar('\n');
 }
@@ -60,7 +78,10 @@ int main(void)
     insert(&head, 30);
 
     printf("List (forward): ");
-    print_list(head);
+    print_list_fwd(head);
+    printf("List (reverse): ");
+    print_list_rev(head);
+
     free_list(head);
     head = NULL;
 
