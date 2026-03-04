@@ -1,7 +1,7 @@
 /*
  * fact_args.c
  *
- * Get factorial using recursion from argv[1]
+ * Get factorial of argv[1] using recursion.
  */
 
 #include <ctype.h>
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: ./fact <number>\n");
+        fprintf(stderr, "Usage: %s <number>\n", argv[0]);
         return 1;
     }
 
@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
     }
 
     unsigned long long n = atoi(argv[1]);
-
     printf("%llu\n", fact(n));
 
     return 0;
