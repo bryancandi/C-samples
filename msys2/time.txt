@@ -1,0 +1,46 @@
+Preferred usage:
+time -f "\nreal %e\nuser %U\nsys %S" .\application.exe
+
+Run COMMAND, then print system resource usage.
+
+  -a, --append              with -o FILE, append instead of overwriting
+  -f, --format=FORMAT       use the specified FORMAT instead of the default
+  -o, --output=FILE         write to FILE instead of STDERR
+  -p, --portability         print POSIX standard 1003.2 conformant string:
+                              real %%e
+                              user %%U
+                              sys %%S
+  -q, --quiet               do not print information about abnormal program
+                            termination (non-zero exit codes or signals)
+  -v, --verbose             print all resource usage information instead of
+                            the default format
+  -h,  --help               display this help and exit
+  -V,  --version            output version information and exit
+
+Commonly usaged format sequences for -f/--format:
+(see documentation for full list)
+  %%   a literal '%'
+  %C   command line and arguments
+  %c   involuntary context switches
+  %E   elapsed real time (wall clock) in [hour:]min:sec
+  %e   elapsed real time (wall clock) in seconds
+  %F   major page faults
+  %M   maximum resident set size in KB
+  %P   percent of CPU this job got
+  %R   minor page faults
+  %S   system (kernel) time in seconds
+  %U   user time in seconds
+  %w   voluntary context switches
+  %x   exit status of command
+
+Default output format:
+%Uuser %Ssystem %Eelapsed %PCPU (%Xavgtext+%Davgdata %Mmaxresident)k
+%Iinputs+%Ooutputs (%Fmajor+%Rminor)pagefaults %Wswaps
+
+NOTE: your shell may have its own version of time, which usually supersedes
+the version described here.  Please refer to your shell's documentation
+for details about the options it supports.
+
+GNU Time website: <https://www.gnu.org/software/time/>
+Full documentation at: <https://www.gnu.org/software/time/manual>
+E-mail bug reports to: bug-time@gnu.org
