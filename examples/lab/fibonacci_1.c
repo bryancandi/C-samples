@@ -19,7 +19,7 @@ int main(void)
 
     while(count >= 0)
     {
-        printf("%zu\n", n1);
+        printf("%llu\n", n1);
         tmp = n1;
         n1 = n1 + n2;
         n2 = tmp;
