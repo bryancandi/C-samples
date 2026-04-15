@@ -10,8 +10,8 @@ int main(void)
     uint64_t n1 = 0, n2 = 1, tmp;
     int count;
 
-    printf("Enter a number (0 to 93): ");
-    if (scanf("%d", &count) != 1 || count < 1 || count > 93)
+    printf("Enter a number (0 - 93): ");
+    if (scanf("%d", &count) != 1 || count < 0 || count > 93)
     {
         fprintf(stderr, "Invalid input.\n");
         return 1;
