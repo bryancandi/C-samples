@@ -28,6 +28,7 @@ int main(void)
 
     printf
     (
+        "Data types and sizes in bytes:\n\n"
         "Size of char:               %2zd\n"
         "Size of unsigned char:      %2zd\n"
         "Size of short:              %2zd\n"
