@@ -90,8 +90,7 @@ int main(int argc, char *argv[])
     str[i] = '\0';
 
     reverse(str);
-    printf("%s", str);
-    printf("\n");
+    printf("%s\n", str);
     
     free(str);
     return 0;
