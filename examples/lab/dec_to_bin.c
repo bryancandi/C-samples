@@ -17,7 +17,25 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
+void reverse(char *s)
+{
+    char *left = s;  // pointer to first character (s[0])
+    char *right = s;
+
+    while (*right != '\0')
+        right++;
+
+    if (right != s)  // if string is not empty, move back from '\0'
+        right--;     // right now points to last character
+
+    while (left < right)
+    {
+        char tmp = *left;
+        *left++ = *right;
+        *right-- = tmp;
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +57,15 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    int j = sizeof(char) * 2;  // binary digit plus null terminator
+    /*
+     * Initial malloc() allocates 2 bytes:
+     *   - 1 byte for the first binary digit
+     *   - 1 byte for the null terminator
+     *
+     * After each digit is written, realloc() expands the buffer by one
+     * additional byte while preserving space for the null terminator.
+     */
+    const size_t j = 2;
     char *str = malloc(j);
     if (str == NULL)
     {
@@ -47,7 +73,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    int i = 0;
+    size_t i = 0;
     for (; n != 0; n /= 2)
     {
         str[i++] = (n % 2) + '0';
@@ -63,7 +89,7 @@ int main(int argc, char *argv[])
     }
     str[i] = '\0';
 
-    strrev(str);  // TO-DO: replace for portability
+    reverse(str);
     printf("%s", str);
     printf("\n");
     
